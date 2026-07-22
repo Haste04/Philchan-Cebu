@@ -1,0 +1,99 @@
+---
+/**
+ * Footer.astro
+ * Utility footer: quick nav, contact recap, and crisis-support info.
+ */
+import { navItems, testingCenter } from "../data/landingData";
+import { Heart, MapPin, Phone, Mail } from "@lucide/astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="border-t border-mist bg-deep-teal text-white dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300"
+>
+  <div class="section-container grid gap-10 py-12 sm:grid-cols-3">
+    <!-- Branding & Mission -->
+    <div>
+      <div class="flex items-center gap-2">
+        <Heart class="h-5 w-5 text-ribbon fill-ribbon" />
+        <p
+          class="font-display text-lg font-semibold text-white dark:text-slate-100"
+        >
+          PhilCHAN Cebu
+        </p>
+      </div>
+      <p class="mt-2 text-sm text-white/70 dark:text-slate-400">
+        Philippine Catholic HIV/AIDS Network Inc. — Cebu Chapter
+      </p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <nav aria-label="Footer Navigation">
+      <p
+        class="text-sm font-semibold uppercase tracking-wide text-white/60 dark:text-slate-400"
+      >
+        Quick Links
+      </p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-white/80 dark:text-slate-300 transition-colors hover:text-white dark:hover:text-emerald-400 hover:underline"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Reach Us / Contact -->
+    <div>
+      <p
+        class="text-sm font-semibold uppercase tracking-wide text-white/60 dark:text-slate-400"
+      >
+        Reach Us
+      </p>
+      <ul class="mt-3 space-y-2.5 text-sm text-white/80 dark:text-slate-300">
+        <li class="flex items-start gap-2">
+          <MapPin
+            class="mt-0.5 h-4 w-4 shrink-0 text-white/60 dark:text-slate-400"
+          />
+          <span>{testingCenter.addressLines.join(", ")}</span>
+        </li>
+        {
+          testingCenter.contactNumbers.map((c) => (
+            <li class="flex items-center gap-2">
+              <Phone class="h-4 w-4 shrink-0 text-white/60 dark:text-slate-400" />
+              <a
+                href={c.href}
+                class="hover:underline hover:text-white dark:hover:text-emerald-400"
+              >
+                {c.label}: {c.number}
+              </a>
+            </li>
+          ))
+        }
+        <li class="flex items-center gap-2">
+          <Mail class="h-4 w-4 shrink-0 text-white/60 dark:text-slate-400" />
+          <a
+            href={`mailto:${testingCenter.email}`}
+            class="hover:underline hover:text-white dark:hover:text-emerald-400"
+          >
+            {testingCenter.email}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+    class="border-t border-white/10 dark:border-slate-800 py-6 text-center text-xs text-white/60 dark:text-slate-500"
+  >
+    &copy; {year} PhilCHAN Cebu. All rights reserved.
+  </div>
+</footer>

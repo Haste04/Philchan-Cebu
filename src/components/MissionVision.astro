@@ -1,0 +1,101 @@
+---
+/**
+ * MissionVision.astro
+ * Two-column mission/vision cards with distinct iconography.
+ */
+import { Target, Eye, Compass, Heart } from "@lucide/astro";
+---
+
+<section
+  id="mission-vision"
+  class="bg-deep-teal/5 dark:bg-slate-950 py-16 sm:py-24 transition-colors duration-300"
+>
+  <div class="section-container">
+    <!-- Section Header -->
+    <div class="text-center">
+      <div
+        class="inline-flex items-center gap-2 rounded-full bg-deep-teal/10 dark:bg-emerald-500/15 border dark:border-emerald-500/30 px-3.5 py-1 text-xs font-semibold text-deep-teal dark:text-emerald-300"
+      >
+        <Compass class="h-4 w-4 text-deep-teal dark:text-emerald-300" />
+        <span>Our Core Guiding Principles</span>
+      </div>
+      <h2
+        class="mt-3 font-display text-3xl font-bold tracking-tight text-charcoal dark:text-slate-50 sm:text-4xl"
+      >
+        Our Mission &amp; Vision
+      </h2>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      <!-- Mission Card -->
+      <article
+        class="relative flex flex-col justify-between rounded-2xl border border-mist/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-card dark:shadow-2xl transition-all hover:shadow-lg"
+      >
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-ribbon/10 dark:bg-rose-500/15 text-ribbon dark:text-rose-400"
+            >
+              <Target class="h-6 w-6" />
+            </div>
+            <h3
+              class="font-display text-2xl font-semibold text-ribbon dark:text-rose-400"
+            >
+              Mission
+            </h3>
+          </div>
+
+          <p class="mt-5 leading-relaxed text-charcoal/80 dark:text-slate-300">
+            To provide accessible, compassionate, and confidential HIV/AIDS
+            prevention, testing, and support services rooted in Catholic values
+            — accompanying every client and their family with dignity, without
+            judgment.
+          </p>
+        </div>
+
+        <div
+          class="mt-6 flex items-center gap-2 text-xs font-medium text-charcoal/50 dark:text-slate-400 border-t border-mist/60 dark:border-slate-800 pt-4"
+        >
+          <Heart class="h-3.5 w-3.5 text-ribbon dark:text-rose-400" />
+          <span>Accompanying with Dignity & Compassion</span>
+        </div>
+      </article>
+
+      <!-- Vision Card -->
+      <article
+        class="relative flex flex-col justify-between rounded-2xl border border-mist/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-card dark:shadow-2xl transition-all hover:shadow-lg"
+      >
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-sanctuary-gold/15 dark:bg-amber-500/15 text-sanctuary-gold dark:text-amber-400"
+            >
+              <Eye class="h-6 w-6" />
+            </div>
+            <h3
+              class="font-display text-2xl font-semibold text-sanctuary-gold dark:text-amber-400"
+            >
+              Vision
+            </h3>
+          </div>
+
+          <p class="mt-5 leading-relaxed text-charcoal/80 dark:text-slate-300">
+            A Cebu where no one facing HIV/AIDS is left without care,
+            information, or hope — where the Church stands as a visible sign of
+            healing and welcome for the most vulnerable.
+          </p>
+        </div>
+
+        <div
+          class="mt-6 flex items-center gap-2 text-xs font-medium text-charcoal/50 dark:text-slate-400 border-t border-mist/60 dark:border-slate-800 pt-4"
+        >
+          <Compass
+            class="h-3.5 w-3.5 text-sanctuary-gold dark:text-amber-400"
+          />
+          <span>A Beacon of Hope and Healing in Cebu</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

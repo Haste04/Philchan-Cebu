@@ -1,0 +1,120 @@
+---
+/**
+ * Layout.astro
+ * Base document shell: <head> meta, SEO, OpenGraph, and global font
+ * preloading. Smooth scroll is enabled globally in global.css
+ * (`html { scroll-behavior: smooth }`) rather than here, so every page
+ * that uses this layout gets in-page anchor navigation for free.
+ */
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path relative to /public, e.g. "/og-default.jpg" */
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = "/og-default.jpg",
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <link rel="icon" type="image/jpeg" href="/PhilChan-Cebu Logo.jpg" />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="author"
+      content="PhilCHAN Cebu — Philippine Catholic HIV/AIDS Network Inc."
+    />
+
+    <!-- Theme color for light and dark mobile browser bars -->
+    <meta
+      name="theme-color"
+      content="#0F4C5C"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#020617"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content="en_PH" />
+    <meta property="og:site_name" content="PhilCHAN Cebu" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Font preloading — matches @font-face src in global.css.
+         Preload only the two weights actually used above the fold. -->
+    <link
+      rel="preload"
+      href="/fonts/fraunces-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/public-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Preconnect to Google Maps origin used by LocationMap.astro,
+         shaves connection-setup time off the lazy-loaded iframe. -->
+    <link rel="preconnect" href="https://www.google.com" />
+
+    <!-- Inline Script to set theme early and prevent flash -->
+    <script is:inline>
+      (function () {
+        const storedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+
+        if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-linen dark:bg-slate-950 text-charcoal dark:text-slate-100 min-h-screen transition-colors duration-300"
+  >
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <slot />
+  </body>
+</html>

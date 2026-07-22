@@ -1,0 +1,130 @@
+---
+/**
+ * TestingInfo.astro
+ * High-conversion section highlighting free, confidential testing services.
+ */
+import { testingCenter } from "../data/landingData";
+import {
+  ShieldCheck,
+  Lock,
+  Clock,
+  MapPin,
+  Phone,
+  CheckCircle2,
+} from "@lucide/astro";
+---
+
+<section
+  id="testing"
+  class="bg-ribbon/5 dark:bg-slate-950/50 py-16 sm:py-24 transition-colors duration-300"
+>
+  <div class="section-container">
+    <div
+      class="mx-auto max-w-3xl rounded-2xl border-2 border-ribbon/20 dark:border-ribbon/40 bg-white dark:bg-slate-900 p-8 shadow-card sm:p-12 transition-colors duration-300"
+    >
+      <!-- Top Pill Badge -->
+      <div class="flex items-center gap-2">
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full bg-ribbon px-4 py-1.5 text-xs font-semibold text-white sm:text-sm shadow-sm"
+        >
+          <Lock class="h-3.5 w-3.5" />
+          Free &amp; Confidential
+        </span>
+      </div>
+
+      <!-- Main Section Heading -->
+      <h2
+        class="mt-4 font-display text-3xl font-bold tracking-tight text-charcoal dark:text-slate-100 sm:text-4xl"
+      >
+        HIV Testing: No Cost, No Judgment
+      </h2>
+
+      <!-- Highlights Grid with Icons -->
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+        {
+          testingCenter.highlights.map((point) => (
+            <li class="flex items-start gap-2.5 text-sm leading-snug text-charcoal/80 dark:text-slate-300">
+              <CheckCircle2 class="mt-0.5 h-4 w-4 shrink-0 text-ribbon dark:text-rose-400" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Hours & Contact Sub-grid -->
+      <div
+        class="mt-8 grid gap-6 border-t border-mist/80 dark:border-slate-800 pt-8 sm:grid-cols-2"
+      >
+        <!-- Clinic Hours -->
+        <div
+          class="rounded-xl bg-mist/30 dark:bg-slate-800/60 p-4 border border-mist/50 dark:border-slate-700/60"
+        >
+          <h3
+            class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-charcoal/70 dark:text-slate-400"
+          >
+            <Clock class="h-4 w-4 text-deep-teal dark:text-emerald-400" />
+            <span>Clinic Hours</span>
+          </h3>
+          <dl class="mt-3 space-y-1.5 text-sm">
+            {
+              testingCenter.hours.map((h) => (
+                <div class="flex justify-between gap-4">
+                  <dt class="text-charcoal/70 dark:text-slate-400 font-medium">
+                    {h.day}
+                  </dt>
+                  <dd class="font-semibold text-charcoal dark:text-slate-200">
+                    {h.time}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <!-- Direct Contact -->
+        <div
+          class="rounded-xl bg-mist/30 dark:bg-slate-800/60 p-4 border border-mist/50 dark:border-slate-700/60"
+        >
+          <h3
+            class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-charcoal/70 dark:text-slate-400"
+          >
+            <Phone class="h-4 w-4 text-deep-teal dark:text-emerald-400" />
+            <span>Talk to Us First</span>
+          </h3>
+          <ul class="mt-3 space-y-2 text-sm">
+            {
+              testingCenter.contactNumbers.map((c) => (
+                <li class="flex items-center gap-2">
+                  <a
+                    href={c.href}
+                    class="font-semibold text-deep-teal dark:text-emerald-400 hover:underline"
+                  >
+                    {c.label}: {c.number}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div
+        class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+      >
+        <a
+          href="#location"
+          class="btn-primary inline-flex items-center justify-center gap-2"
+        >
+          <MapPin class="h-4 w-4" />
+          <span>See Location &amp; Directions</span>
+        </a>
+        <p
+          class="text-xs text-charcoal/50 dark:text-slate-400 text-center sm:text-right"
+        >
+          Walk-ins are always welcome during regular hours.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

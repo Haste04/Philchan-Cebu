@@ -1,0 +1,74 @@
+---
+/**
+ * About.astro
+ * "Who is PhilCHAN?" — short organizational background with full dark mode support.
+ */
+import { Heart, Users, CheckCircle } from "@lucide/astro";
+
+const facts = [
+  {
+    stat: "1992",
+    label:
+      "Founded by the Catholic Bishops\u2019 Conference of the Philippines",
+  },
+  {
+    stat: "30+",
+    label: "Years supporting people living with HIV/AIDS in the Visayas",
+  },
+  {
+    stat: "100%",
+    label: "Free testing, counseling, and pastoral care — no cost, ever",
+  },
+];
+---
+
+<section
+  id="about"
+  class="bg-slate-50 dark:bg-slate-950 transition-colors duration-300 py-12 lg:py-16"
+>
+  <div class="section-container">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2
+          class="text-display-lg font-semibold text-slate-900 dark:text-slate-100 transition-colors"
+        >
+          Who is PhilCHAN Cebu?
+        </h2>
+        <p
+          class="mt-6 text-charcoal/80 dark:text-slate-300 transition-colors leading-relaxed"
+        >
+          The Philippine Catholic HIV/AIDS Network Inc. (PhilCHAN) is a
+          Church-based response to the HIV/AIDS epidemic, formed to provide
+          care, education, and advocacy grounded in Catholic social teaching.
+          The Cebu chapter serves the Central Visayas region with free testing,
+          counseling, and community outreach — treating every person with the
+          dignity owed to them, regardless of status or circumstance.
+        </p>
+        <p
+          class="mt-4 text-charcoal/80 dark:text-slate-300 transition-colors leading-relaxed"
+        >
+          We work alongside parishes, the Department of Health, and local
+          government units to close gaps in access to testing and reduce the
+          stigma that keeps people from seeking care.
+        </p>
+      </div>
+
+      <dl class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-1">
+        {
+          facts.map((fact) => (
+            <div class="rounded-xl border border-mist dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm transition-colors duration-300">
+              <dt class="font-display text-3xl font-semibold text-deep-teal dark:text-emerald-400">
+                {fact.stat}
+              </dt>
+              <dd class="mt-2 text-sm text-charcoal/70 dark:text-slate-300">
+                {fact.label}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <div class="mt-16 divider-ribbon opacity-80 dark:opacity-40"></div>
+  </div>
+</section>

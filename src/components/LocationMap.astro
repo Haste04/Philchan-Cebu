@@ -1,0 +1,131 @@
+---
+/**
+ * LocationMap.astro
+ * Address + contact details alongside an embedded Google Map.
+ * Performance note: iframe uses loading="lazy" to defer Map assets until scrolled into view.
+ */
+import { testingCenter } from "../data/landingData";
+import { MapPin, Phone, Clock, Mail, Navigation } from "@lucide/astro";
+---
+
+<section
+  id="location"
+  class="section-container py-16 transition-colors duration-300"
+>
+  <h2
+    class="text-display-lg text-center font-display font-semibold text-charcoal dark:text-slate-100"
+  >
+    Visit Us
+  </h2>
+
+  <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start">
+    <!-- Contact & Details Card -->
+    <div
+      class="rounded-2xl border border-mist dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-card transition-colors duration-300"
+    >
+      <h3
+        class="font-display text-xl font-semibold text-charcoal dark:text-slate-100"
+      >
+        {testingCenter.name}
+      </h3>
+
+      <!-- Address -->
+      <div
+        class="mt-4 flex items-start gap-3 text-charcoal/80 dark:text-slate-300"
+      >
+        <MapPin class="mt-1 h-5 w-5 shrink-0 text-ribbon dark:text-rose-400" />
+        <address class="not-italic">
+          {testingCenter.addressLines.map((line) => <p>{line}</p>)}
+        </address>
+      </div>
+
+      <!-- Hours -->
+      {
+        testingCenter.hours && testingCenter.hours.length > 0 && (
+          <div class="mt-6 border-t border-mist/60 dark:border-slate-800 pt-6">
+            <p class="flex items-center gap-2 font-semibold text-charcoal/80 dark:text-slate-200 text-sm">
+              <Clock class="h-4 w-4 text-deep-teal dark:text-emerald-400" />
+              <span>Operating Hours</span>
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-charcoal/70 dark:text-slate-400 pl-6">
+              {testingCenter.hours.map((h) => (
+                <li class="flex justify-between sm:justify-start sm:gap-6">
+                  <span class="font-medium text-charcoal/80 dark:text-slate-300">
+                    {h.day}:
+                  </span>
+                  <span>{h.time}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <!-- Contact Numbers & Email -->
+      <div class="mt-6 border-t border-mist/60 dark:border-slate-800 pt-6">
+        <dl class="space-y-3 text-sm">
+          {
+            testingCenter.contactNumbers.map((c) => (
+              <div class="flex items-center gap-3">
+                <Phone class="h-4 w-4 shrink-0 text-deep-teal dark:text-emerald-400" />
+                <dt class="font-semibold text-charcoal/60 dark:text-slate-400">
+                  {c.label}:
+                </dt>
+                <dd>
+                  <a
+                    href={c.href}
+                    class="text-deep-teal dark:text-emerald-400 hover:underline font-medium"
+                  >
+                    {c.number}
+                  </a>
+                </dd>
+              </div>
+            ))
+          }
+          <div class="flex items-center gap-3">
+            <Mail
+              class="h-4 w-4 shrink-0 text-deep-teal dark:text-emerald-400"
+            />
+            <dt class="font-semibold text-charcoal/60 dark:text-slate-400">
+              Email:
+            </dt>
+            <dd>
+              <a
+                href={`mailto:${testingCenter.email}`}
+                class="text-deep-teal dark:text-emerald-400 hover:underline font-medium"
+              >
+                {testingCenter.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Directions CTA Button -->
+      <a
+        href={testingCenter.mapDirectionsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-secondary mt-8 inline-flex items-center gap-2 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-700"
+      >
+        <Navigation class="h-4 w-4" />
+        <span>Get Directions</span>
+      </a>
+    </div>
+
+    <!-- Map Embed -->
+    <div
+      class="overflow-hidden rounded-2xl border border-mist dark:border-slate-800 shadow-card min-h-[400px] dark:bg-slate-900"
+    >
+      <iframe
+        src={testingCenter.mapEmbedSrc}
+        width="100%"
+        height="100%"
+        class="min-h-[400px] w-full transition-all duration-300 dark:invert dark:hue-rotate-180 dark:contrast-[0.85]"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title={`Map showing the location of ${testingCenter.name}`}></iframe>
+    </div>
+  </div>
+</section>
