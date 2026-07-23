@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------------------------------------------------------------------
-   Self-hosted fonts. Download the woff2 files from Google Fonts
-   (or fonts.google.com/download) and place them in /public/fonts/.
-   font-display: swap avoids invisible-text flash while keeping
-   layout-shift low since we pair with a similar-metric fallback.
---------------------------------------------------------------------- */
 @font-face {
   font-family: 'Fraunces';
   src: url('/fonts/fraunces-variable.woff2') format('woff2');
@@ -26,61 +20,110 @@
 
 @layer base {
   html {
-    /* Smooth in-page scrolling for #hero, #about, #mission, etc. */
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem; /* offset for sticky navbar height */
+    scroll-padding-top: 8rem; /* Account for floating sticky nav */
   }
 
-  /* Respect users who've asked for reduced motion — overrides the smooth
-     scroll above so section jumps don't fight an accessibility setting. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {
-    @apply bg-linen text-charcoal font-body antialiased;
+    @apply bg-health-white text-health-text font-body antialiased overflow-x-hidden selection:bg-health-green/20 selection:text-health-green;
   }
 
   h1, h2, h3, h4 {
-    @apply font-display text-deep-teal;
+    @apply font-display text-health-green;
   }
 
-  /* Visible focus ring everywhere — required for keyboard navigation,
-     easy to lose track of when custom-styling buttons/links. */
   :focus-visible {
-    outline: 3px solid theme('colors.sanctuary-gold.DEFAULT');
+    outline: 3px solid theme('colors.health-red.DEFAULT');
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Signature element: a single thin ribbon-motif rule used once per
-     section transition. Not repeated as ambient decoration. */
+  /* Layout utilities */
+  .section-container {
+    @apply mx-auto max-w-content px-6 py-16 sm:py-24 lg:py-32;
+  }
+
+  /* Ribbon */
   .divider-ribbon {
-    @apply relative h-px w-full bg-mist;
+    @apply relative h-px w-full bg-gradient-to-r from-transparent via-health-border to-transparent;
   }
   .divider-ribbon::after {
     content: '';
-    @apply absolute left-1/2 top-1/2 h-2 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ribbon;
+    @apply absolute left-1/2 top-1/2 h-2 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-health-red shadow-sm;
   }
 
-  .section-container {
-    @apply mx-auto max-w-content px-6 py-16 sm:py-20 lg:py-24;
-  }
-
+  /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-full bg-ribbon px-6 py-3 font-body font-semibold text-white shadow-card transition-colors hover:bg-ribbon-dark;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-health-red px-7 py-3.5 font-body font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-health-red-dark hover:shadow-card active:translate-y-0;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-full border-2 border-deep-teal px-6 py-3 font-body font-semibold text-deep-teal transition-colors hover:bg-deep-teal hover:text-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-health-green/20 bg-health-white px-7 py-3.5 font-body font-semibold text-health-green transition-all duration-300 hover:-translate-y-0.5 hover:border-health-green hover:bg-health-green-pale hover:shadow-soft active:translate-y-0;
   }
 
-  /* Screen-reader-only skip link, visible on focus — required for
-     keyboard users to bypass the navbar. */
   .skip-link {
-    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-deep-teal focus:px-4 focus:py-2 focus:text-white;
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-health-green focus:px-4 focus:py-2 focus:text-white focus:shadow-lg;
   }
+
+  /* Glassmorphism Cards */
+  .glass-card {
+    @apply bg-health-white/80 backdrop-blur-xl border border-health-white shadow-card rounded-[2.5rem];
+  }
+}
+
+@layer utilities {
+  /* Scroll Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-left.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
 }

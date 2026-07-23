@@ -1,15 +1,14 @@
 ---
 /**
  * About.astro
- * "Who is PhilCHAN?" — short organizational background with full dark mode support.
+ * "Who is PhilCHAN?" - short organizational background with modern styling.
  */
 import { Heart, Users, CheckCircle } from "@lucide/astro";
 
 const facts = [
   {
     stat: "1992",
-    label:
-      "Founded by the Catholic Bishops\u2019 Conference of the Philippines",
+    label: "Founded by the Catholic Bishops' Conference of the Philippines",
   },
   {
     stat: "30+",
@@ -17,35 +16,36 @@ const facts = [
   },
   {
     stat: "100%",
-    label: "Free testing, counseling, and pastoral care — no cost, ever",
+    label: "Free testing, counseling, and pastoral care - no cost, ever",
   },
 ];
 ---
 
 <section
   id="about"
-  class="bg-slate-50 dark:bg-slate-950 transition-colors duration-300 py-12 lg:py-16"
+  class="bg-health-white transition-colors duration-300 py-16 lg:py-24"
 >
-  <div class="section-container">
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
-      <div>
+  <div class="section-container relative z-10">
+    <div class="grid gap-16 lg:grid-cols-2 lg:gap-20 items-center">
+      <div class="reveal-left">
         <h2
-          class="text-display-lg font-semibold text-slate-900 dark:text-slate-100 transition-colors"
+          class="text-4xl sm:text-5xl font-display font-bold text-health-text tracking-tight"
         >
           Who is PhilCHAN Cebu?
         </h2>
+        <div class="h-1.5 w-20 bg-health-red rounded-full mt-6 mb-8"></div>
         <p
-          class="mt-6 text-charcoal/80 dark:text-slate-300 transition-colors leading-relaxed"
+          class="text-health-text/80 text-xl leading-relaxed font-medium"
         >
           The Philippine Catholic HIV/AIDS Network Inc. (PhilCHAN) is a
           Church-based response to the HIV/AIDS epidemic, formed to provide
           care, education, and advocacy grounded in Catholic social teaching.
           The Cebu chapter serves the Central Visayas region with free testing,
-          counseling, and community outreach — treating every person with the
+          counseling, and community outreach - treating every person with the
           dignity owed to them, regardless of status or circumstance.
         </p>
         <p
-          class="mt-4 text-charcoal/80 dark:text-slate-300 transition-colors leading-relaxed"
+          class="mt-6 text-health-text/80 text-xl leading-relaxed font-medium"
         >
           We work alongside parishes, the Department of Health, and local
           government units to close gaps in access to testing and reduce the
@@ -55,12 +55,12 @@ const facts = [
 
       <dl class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-1">
         {
-          facts.map((fact) => (
-            <div class="rounded-xl border border-mist dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm transition-colors duration-300">
-              <dt class="font-display text-3xl font-semibold text-deep-teal dark:text-emerald-400">
+          facts.map((fact, index) => (
+            <div class={`glass-card p-8 transition-transform duration-300 hover:-translate-y-2 reveal-right delay-${(index + 1) * 100}`}>
+              <dt class="font-display text-5xl font-bold text-health-green">
                 {fact.stat}
               </dt>
-              <dd class="mt-2 text-sm text-charcoal/70 dark:text-slate-300">
+              <dd class="mt-4 text-lg font-medium text-health-text/70 leading-relaxed">
                 {fact.label}
               </dd>
             </div>
@@ -69,6 +69,6 @@ const facts = [
       </dl>
     </div>
 
-    <div class="mt-16 divider-ribbon opacity-80 dark:opacity-40"></div>
+    <div class="mt-24 divider-ribbon opacity-80 reveal delay-300"></div>
   </div>
 </section>

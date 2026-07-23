@@ -1,7 +1,7 @@
 ---
 /**
  * OrgChart.astro
- * Matches the official PhilCHAN Cebu Organizational Chart hierarchy and pill node layout.
+ * Matches the official PhilCHAN Cebu Organizational Chart hierarchy and pill node layout, with modern polished styling.
  */
 import { User, ArrowDown } from "@lucide/astro";
 
@@ -62,35 +62,32 @@ const members: OrgNode[] = [
 
 <section
   id="org-chart"
-  class="bg-slate-50/50 dark:bg-slate-950 py-16 lg:py-24 border-t border-slate-200/60 dark:border-slate-800/80 transition-colors duration-300"
+  class="bg-health-bg py-20 lg:py-32 relative overflow-hidden z-10 transition-colors duration-300"
 >
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
     <!-- Section Header -->
-    <div class="text-center">
+    <div class="text-center reveal">
       <h2
-        class="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-3xl lg:text-4xl"
-      >
-        PHILIPPINE CATHOLIC HIV/AIDS NETWORK INC.
-      </h2>
-      <p
-        class="mt-2 text-lg font-semibold text-emerald-800 dark:text-emerald-400"
+        class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-health-green"
       >
         Organizational Chart
-      </p>
-      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">
-        Cebu City Chapter
+      </h2>
+      <p
+        class="mt-4 text-xl font-medium text-health-text/70"
+      >
+        PHILIPPINE CATHOLIC HIV/AIDS NETWORK INC. &mdash; Cebu City Chapter
       </p>
     </div>
 
     <!-- Tree Hierarchy Container -->
-    <div class="mt-12 flex flex-col items-center">
+    <div class="mt-16 flex flex-col items-center">
       <!-- LEVEL 1: PRESIDENT -->
-      <div class="relative z-10">
+      <div class="relative z-10 reveal delay-100">
         <div
-          class="flex items-center gap-3.5 rounded-full bg-emerald-100/90 dark:bg-slate-900/90 py-2.5 px-6 border border-emerald-300 dark:border-emerald-500/40 shadow-sm max-w-md"
+          class="flex items-center gap-4 rounded-[2rem] bg-health-white p-3 pr-8 border border-health-border shadow-soft max-w-md hover:shadow-card transition-shadow"
         >
           <div
-            class="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500 dark:border-emerald-400 bg-white dark:bg-slate-800 shadow-inner flex items-center justify-center"
+            class="h-16 w-16 shrink-0 overflow-hidden rounded-3xl bg-health-green-pale flex items-center justify-center"
           >
             {
               president.imagePath ? (
@@ -100,16 +97,16 @@ const members: OrgNode[] = [
                   class="h-full w-full object-cover"
                 />
               ) : (
-                <User class="h-8 w-8 text-emerald-700 dark:text-emerald-400" />
+                <User class="h-8 w-8 text-health-green" />
               )
             }
           </div>
           <div>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">
+            <h3 class="text-base font-bold text-health-text">
               {president.name}
             </h3>
             <p
-              class="text-xs font-semibold text-emerald-800 dark:text-emerald-400"
+              class="text-xs font-bold text-health-green uppercase tracking-wider mt-1"
             >
               {president.title}
             </p>
@@ -119,18 +116,18 @@ const members: OrgNode[] = [
 
       <!-- Arrow 1 -->
       <div
-        class="my-2 flex flex-col items-center text-slate-400 dark:text-slate-500"
+        class="my-4 flex flex-col items-center text-health-border reveal delay-200"
       >
-        <ArrowDown class="h-6 w-6 stroke-[2.5]" />
+        <ArrowDown class="h-6 w-6 stroke-[3]" />
       </div>
 
       <!-- LEVEL 2: COORDINATOR / HEAD -->
-      <div class="relative z-10">
+      <div class="relative z-10 reveal delay-300">
         <div
-          class="flex items-center gap-3.5 rounded-full bg-emerald-100/90 dark:bg-slate-900/90 py-2.5 px-6 border border-emerald-300 dark:border-emerald-500/40 shadow-sm max-w-lg"
+          class="flex items-center gap-4 rounded-[2rem] bg-health-white p-3 pr-8 border border-health-border shadow-soft max-w-lg hover:shadow-card transition-shadow"
         >
           <div
-            class="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500 dark:border-emerald-400 bg-white dark:bg-slate-800 shadow-inner flex items-center justify-center"
+            class="h-16 w-16 shrink-0 overflow-hidden rounded-3xl bg-health-green-pale flex items-center justify-center"
           >
             {
               coordinator.imagePath ? (
@@ -140,16 +137,16 @@ const members: OrgNode[] = [
                   class="h-full w-full object-cover"
                 />
               ) : (
-                <User class="h-8 w-8 text-emerald-700 dark:text-emerald-400" />
+                <User class="h-8 w-8 text-health-green" />
               )
             }
           </div>
           <div>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">
+            <h3 class="text-base font-bold text-health-text">
               {coordinator.name}
             </h3>
             <p
-              class="text-xs font-semibold text-emerald-800 dark:text-emerald-400"
+              class="text-xs font-bold text-health-green uppercase tracking-wider mt-1"
             >
               {coordinator.title}
             </p>
@@ -158,42 +155,42 @@ const members: OrgNode[] = [
       </div>
 
       <!-- Branch Connectors (Desktop Horizontal Line) -->
-      <div class="relative mt-6 w-full max-w-5xl">
+      <div class="relative mt-8 w-full max-w-5xl reveal delay-400">
         <div
-          class="hidden lg:block absolute left-1/2 -top-6 h-6 w-0.5 bg-slate-300 dark:bg-slate-700 -translate-x-1/2"
+          class="hidden lg:block absolute left-1/2 -top-8 h-8 w-0.5 bg-health-border -translate-x-1/2"
         >
         </div>
         <div
-          class="hidden lg:block w-full border-t-2 border-dashed border-slate-300 dark:border-slate-700"
+          class="hidden lg:block w-full border-t-2 border-dashed border-health-border"
         >
         </div>
       </div>
 
       <!-- LEVEL 3: THREE BRANCHES -->
       <div
-        class="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 w-full max-w-6xl items-start"
+        class="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-12 w-full max-w-6xl items-start"
       >
         <!-- BRANCH 1: Admin & Mobilizing Officers (Left Column) -->
-        <div class="lg:col-span-4 flex flex-col items-center gap-6">
+        <div class="lg:col-span-4 flex flex-col items-center gap-6 reveal-left delay-500">
           {
             adminBranch.map((node, index) => (
               <>
-                <div class="flex w-full items-center gap-3 rounded-full bg-emerald-100/90 dark:bg-slate-900/90 py-2.5 px-5 border border-emerald-300 dark:border-emerald-500/40 shadow-sm">
-                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500 dark:border-emerald-400 bg-white dark:bg-slate-800 flex items-center justify-center">
-                    <User class="h-7 w-7 text-emerald-700 dark:text-emerald-400" />
+                <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
+                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                    <User class="h-6 w-6 text-health-green" />
                   </div>
                   <div>
-                    <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100">
+                    <h4 class="text-sm font-bold text-health-text">
                       {node.name}
                     </h4>
-                    <p class="text-[10px] font-bold text-emerald-800 dark:text-emerald-400 leading-tight uppercase mt-0.5">
+                    <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
                       {node.title}
                     </p>
                   </div>
                 </div>
 
                 {index < adminBranch.length - 1 && (
-                  <ArrowDown class="h-5 w-5 text-slate-400 dark:text-slate-500 -my-2" />
+                  <ArrowDown class="h-5 w-5 text-health-border -my-2" />
                 )}
               </>
             ))
@@ -201,26 +198,26 @@ const members: OrgNode[] = [
         </div>
 
         <!-- BRANCH 2: Corporate Secretary & Board (Middle Column) -->
-        <div class="lg:col-span-3 flex flex-col items-center gap-6">
+        <div class="lg:col-span-3 flex flex-col items-center gap-6 reveal delay-500">
           {
             boardBranch.map((node, index) => (
               <>
-                <div class="flex w-full items-center gap-3 rounded-full bg-emerald-100/90 dark:bg-slate-900/90 py-2.5 px-5 border border-emerald-300 dark:border-emerald-500/40 shadow-sm">
-                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500 dark:border-emerald-400 bg-white dark:bg-slate-800 flex items-center justify-center">
-                    <User class="h-7 w-7 text-emerald-700 dark:text-emerald-400" />
+                <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
+                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                    <User class="h-6 w-6 text-health-green" />
                   </div>
                   <div>
-                    <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100">
+                    <h4 class="text-sm font-bold text-health-text">
                       {node.name}
                     </h4>
-                    <p class="text-[10px] font-bold text-emerald-800 dark:text-emerald-400 leading-tight uppercase mt-0.5">
+                    <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
                       {node.title}
                     </p>
                   </div>
                 </div>
 
                 {index < boardBranch.length - 1 && (
-                  <ArrowDown class="h-5 w-5 text-slate-400 dark:text-slate-500 -my-2" />
+                  <ArrowDown class="h-5 w-5 text-health-border -my-2" />
                 )}
               </>
             ))
@@ -228,18 +225,18 @@ const members: OrgNode[] = [
         </div>
 
         <!-- BRANCH 3: Members Grid (Right 2-Column Grid) -->
-        <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
-            members.map((member) => (
-              <div class="flex items-center gap-2.5 rounded-full bg-emerald-100/90 dark:bg-slate-900/90 py-2 px-3.5 border border-emerald-300 dark:border-emerald-500/40 shadow-sm">
-                <div class="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500 dark:border-emerald-400 bg-white dark:bg-slate-800 flex items-center justify-center">
-                  <User class="h-6 w-6 text-emerald-700 dark:text-emerald-400" />
+            members.map((member, index) => (
+              <div class={`flex items-center gap-3 rounded-[2rem] bg-health-white p-2 pr-4 border border-health-border shadow-sm hover:shadow-md transition-shadow reveal-right delay-${(index % 4 + 2) * 100}`}>
+                <div class="h-10 w-10 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                  <User class="h-5 w-5 text-health-green" />
                 </div>
                 <div class="min-w-0">
-                  <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
+                  <h4 class="text-sm font-bold text-health-text truncate">
                     {member.name}
                   </h4>
-                  <p class="text-[10px] font-bold text-emerald-800 dark:text-emerald-400">
+                  <p class="text-[10px] font-bold text-health-green uppercase tracking-wider mt-0.5">
                     {member.title}
                   </p>
                 </div>

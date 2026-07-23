@@ -1,69 +1,66 @@
 ---
 /**
  * Navbar.astro
- * Sticky navbar with light/dark mode toggle, active section underlines,
- * scroll progress bar, and responsive mobile menu.
+ * Sticky floating circle/pill navbar with glassmorphism.
  */
 import { Image } from "astro:assets";
 import { navItems } from "../data/landingData";
-import { Menu, X, Heart, Sun, Moon } from "@lucide/astro";
+import { Menu, X } from "@lucide/astro";
 import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
 import logoImage2 from "../assets/images/logos/CBCP-ECHC Logo.png";
 import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-mist bg-linen/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 transition-colors duration-300"
+  id="main-nav"
+  class="sticky top-4 z-50 w-full px-4 sm:px-6 transition-all duration-300"
 >
   <nav
-    class="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3"
+    class="mx-auto flex max-w-content items-center justify-between px-3 py-2 sm:px-4 rounded-full bg-health-white/95 backdrop-blur-xl border border-health-border/40 shadow-card"
     aria-label="Primary"
   >
-    <!-- Logo & Brand Name (Aligned Far Left) -->
+    <!-- Logo & Brand Name -->
     <a
-      href="#hero"
-      class="flex items-center gap-3 font-display text-lg font-semibold text-deep-teal dark:text-emerald-400"
+      href="/"
+      class="flex items-center gap-3 font-display text-xl font-bold text-health-green hover:opacity-80 transition-opacity pl-2"
     >
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1 bg-health-white p-1 rounded-full shadow-sm border border-health-border/30">
         <Image
           src={logoImage}
           alt="PhilCHAN Cebu logo"
-          width={40}
-          height={40}
-          class="rounded-full h-9 w-9 sm:h-10 sm:w-10 object-cover"
+          width={32}
+          height={32}
+          class="rounded-full h-8 w-8 object-cover"
         />
         <Image
           src={logoImage2}
           alt="CBCP logo"
-          width={40}
-          height={40}
-          class="rounded-full h-9 w-9 sm:h-10 sm:w-10 object-cover"
+          width={32}
+          height={32}
+          class="rounded-full h-8 w-8 object-cover"
         />
         <Image
           src={logoImage3}
           alt="Catholic Bishop's logo"
-          width={40}
-          height={40}
-          class="rounded-full h-9 w-9 sm:h-10 sm:w-10 object-cover"
+          width={32}
+          height={32}
+          class="rounded-full h-8 w-8 object-cover"
         />
       </div>
-      <span class="hidden sm:inline whitespace-nowrap">PhilCHAN Cebu</span>
+      <span class="hidden lg:inline tracking-tight text-[22px]">PhilCHAN Cebu</span>
     </a>
 
     <!-- Desktop Nav Links -->
-    <ul id="desktop-nav-menu" class="hidden items-center gap-8 md:flex">
+    <ul id="desktop-nav-menu" class="hidden items-center gap-1 md:flex">
       {
-        navItems.map((item, index) => (
+        navItems.map((item) => (
           <li>
             <a
               href={item.href}
-              class={`nav-link font-body text-sm font-semibold py-1 transition-all duration-200 hover:text-deep-teal dark:hover:text-emerald-400 ${
-                index === 0
-                  ? "active border-b-2 border-ribbon text-ribbon"
-                  : "text-charcoal dark:text-slate-300"
-              }`}
+              class="nav-link relative block px-5 py-2.5 font-body text-[15px] font-bold text-health-text/80 transition-all duration-200 hover:text-health-red rounded-full hover:bg-health-red/5"
             >
               {item.label}
+              <span class="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-health-red opacity-0 transition-opacity duration-300 nav-indicator"></span>
             </a>
           </li>
         ))
@@ -71,27 +68,16 @@ import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
     </ul>
 
     <!-- Controls & Actions -->
-    <div class="flex items-center gap-4">
-      <!-- LIGHT / DARK MODE TOGGLE BUTTON -->
-      <button
-        id="theme-toggle"
-        type="button"
-        class="rounded-lg p-2 text-charcoal hover:bg-mist/50 dark:text-slate-300 dark:hover:bg-slate-800 focus:outline-none transition-colors"
-        aria-label="Toggle dark mode"
-      >
-        <Sun class="hidden h-5 w-5 dark:block text-amber-400" />
-        <Moon class="h-5 w-5 dark:hidden text-slate-700" />
-      </button>
-
+    <div class="flex items-center gap-2 sm:gap-3">
       <!-- CTA Button (Desktop) -->
-      <a href="#testing" class="hidden md:inline-flex btn-primary text-sm">
+      <a href="/#location" class="hidden md:inline-flex btn-primary text-sm px-6 py-2.5 shadow-sm hover:shadow-md transition-shadow">
         Get Tested Free
       </a>
 
       <!-- Mobile Menu Toggle -->
       <details id="mobile-menu-details" class="group relative md:hidden">
         <summary
-          class="list-none cursor-pointer rounded-md p-2 text-charcoal hover:bg-mist/50 dark:text-slate-300 dark:hover:bg-slate-800 [&::-webkit-details-marker]:hidden"
+          class="list-none cursor-pointer rounded-full p-2.5 text-health-green bg-health-green/5 hover:bg-health-green/10 [&::-webkit-details-marker]:hidden transition-colors"
           aria-label="Toggle Navigation Menu"
         >
           <Menu class="h-6 w-6 group-open:hidden" />
@@ -100,24 +86,24 @@ import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
 
         <!-- Mobile Dropdown -->
         <ul
-          class="absolute right-0 top-12 w-56 rounded-xl border border-mist bg-linen p-3 shadow-card dark:border-slate-800 dark:bg-slate-900"
+          class="absolute right-0 top-16 w-[280px] rounded-3xl border border-health-border/50 bg-health-white/95 backdrop-blur-xl p-4 shadow-card origin-top-right transition-all transform opacity-0 scale-95 pointer-events-none group-open:opacity-100 group-open:scale-100 group-open:pointer-events-auto"
         >
           {
             navItems.map((item) => (
               <li>
                 <a
                   href={item.href}
-                  class="mobile-nav-link block rounded-md px-3 py-2 text-sm font-medium text-charcoal hover:bg-mist dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  class="mobile-nav-link block rounded-2xl px-5 py-3.5 text-base font-bold text-health-text hover:bg-health-green-pale hover:text-health-green transition-colors"
                 >
                   {item.label}
                 </a>
               </li>
             ))
           }
-          <li class="mt-1 border-t border-mist dark:border-slate-800 pt-2">
+          <li class="mt-3 border-t border-health-border/40 pt-3">
             <a
-              href="#testing"
-              class="block rounded-md px-3 py-2 text-sm font-semibold text-ribbon hover:bg-mist/50 dark:hover:bg-slate-800 transition-colors"
+              href="/#location"
+              class="block w-full rounded-2xl px-5 py-3.5 text-base font-bold text-white bg-health-red hover:bg-health-red-dark transition-colors text-center shadow-soft"
             >
               Get Tested Free
             </a>
@@ -126,78 +112,40 @@ import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
       </details>
     </div>
   </nav>
-
-  <!-- SCROLL PROGRESS BAR -->
-  <div class="h-1 w-full bg-mist/40 dark:bg-slate-800 overflow-hidden">
-    <div
-      id="scroll-progress-bar"
-      class="h-full w-0 bg-ribbon transition-all duration-150 ease-out"
-    >
-    </div>
-  </div>
 </header>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // 1. Light/Dark Mode Toggle Script
-    const themeToggleBtn = document.getElementById("theme-toggle");
-
-    themeToggleBtn?.addEventListener("click", () => {
-      const isDark = document.documentElement.classList.toggle("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-
-    // 2. Scroll Progress Bar
-    const progressBar = document.getElementById("scroll-progress-bar");
-    const updateProgressBar = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-
-      if (progressBar) {
-        progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
-      }
-    };
-
-    window.addEventListener("scroll", updateProgressBar, { passive: true });
-    updateProgressBar();
-
-    // 3. Desktop Active Link Underline
+  function initNavbar() {
+    // Active Link Highlight
+    const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
+    
     navLinks.forEach((link) => {
-      link.addEventListener("click", function () {
-        navLinks.forEach((l) => {
-          l.classList.remove(
-            "active",
-            "border-b-2",
-            "border-ribbon",
-            "text-ribbon",
-          );
-          l.classList.add("text-charcoal", "dark:text-slate-300");
-        });
-
-        this.classList.add(
-          "active",
-          "border-b-2",
-          "border-ribbon",
-          "text-ribbon",
-        );
-        this.classList.remove("text-charcoal", "dark:text-slate-300");
-      });
+      const linkPath = new URL(link.href).pathname;
+      const indicator = link.querySelector('.nav-indicator');
+      
+      if (linkPath === currentPath || (linkPath === '/' && currentPath === '')) {
+        link.classList.add("text-health-red", "bg-health-red/10");
+        link.classList.remove("text-health-text/80");
+        indicator?.classList.remove('opacity-0');
+      } else {
+        link.classList.remove("text-health-red", "bg-health-red/10");
+        link.classList.add("text-health-text/80");
+        indicator?.classList.add('opacity-0');
+      }
     });
 
-    // 4. Auto-close mobile dropdown
-    const mobileNavLinks =
-      document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
-    const mobileDetails = document.querySelector<HTMLDetailsElement>(
-      "#mobile-menu-details",
-    );
+    // Auto-close mobile dropdown
+    const mobileNavLinks = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
+    const mobileDetails = document.querySelector<HTMLDetailsElement>("#mobile-menu-details");
+    
     mobileNavLinks.forEach((link) => {
       link.addEventListener("click", () => {
         mobileDetails?.removeAttribute("open");
       });
     });
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", initNavbar);
+  document.addEventListener("astro:after-swap", initNavbar);
 </script>

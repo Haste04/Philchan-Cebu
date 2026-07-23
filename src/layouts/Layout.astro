@@ -1,11 +1,11 @@
 ---
 /**
  * Layout.astro
- * Base document shell: <head> meta, SEO, OpenGraph, and global font
- * preloading. Smooth scroll is enabled globally in global.css
- * (`html { scroll-behavior: smooth }`) rather than here, so every page
- * that uses this layout gets in-page anchor navigation for free.
+ * Base document shell: <head> meta, SEO, OpenGraph, and global font preloading.
+ * Includes Astro View Transitions for immersive SPA-like navigation,
+ * and a global Intersection Observer for scroll animations.
  */
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
@@ -23,8 +23,8 @@ const {
   noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL(ogImage, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost');
+const ogImageURL = new URL(ogImage, Astro.site || 'http://localhost');
 ---
 
 <!doctype html>
@@ -44,18 +44,18 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="description" content={description} />
     <meta
       name="author"
-      content="PhilCHAN Cebu — Philippine Catholic HIV/AIDS Network Inc."
+      content="PhilCHAN Cebu - Philippine Catholic HIV/AIDS Network Inc."
     />
 
-    <!-- Theme color for light and dark mobile browser bars -->
+    <!-- Theme color -->
     <meta
       name="theme-color"
-      content="#0F4C5C"
+      content="#FCFBF9"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#020617"
+      content="#FCFBF9"
       media="(prefers-color-scheme: dark)"
     />
 
@@ -74,8 +74,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Font preloading — matches @font-face src in global.css.
-         Preload only the two weights actually used above the fold. -->
+    <!-- Font preloading -->
     <link
       rel="preload"
       href="/fonts/fraunces-variable.woff2"
@@ -91,11 +90,12 @@ const ogImageURL = new URL(ogImage, Astro.site);
       crossorigin
     />
 
-    <!-- Preconnect to Google Maps origin used by LocationMap.astro,
-         shaves connection-setup time off the lazy-loaded iframe. -->
+    <!-- Preconnect to Google Maps origin -->
     <link rel="preconnect" href="https://www.google.com" />
 
-    <!-- Inline Script to set theme early and prevent flash -->
+    <ClientRouter />
+
+    <!-- Inline Script to set theme (if used) -->
     <script is:inline>
       (function () {
         const storedTheme = localStorage.getItem("theme");
@@ -111,10 +111,42 @@ const ogImageURL = new URL(ogImage, Astro.site);
       })();
     </script>
   </head>
-  <body
-    class="bg-linen dark:bg-slate-950 text-charcoal dark:text-slate-100 min-h-screen transition-colors duration-300"
-  >
+  <body class="flex flex-col min-h-screen bg-health-white text-health-text transition-colors duration-300">
     <a href="#main" class="skip-link">Skip to main content</a>
-    <slot />
+    
+    <div class="flex-grow">
+      <slot />
+    </div>
+
+    <!-- Global Scroll Animation Script -->
+    <script>
+      function initScrollAnimations() {
+        const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              // Optional: Stop observing once revealed
+              // observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -10% 0px',
+          threshold: 0.1
+        });
+
+        reveals.forEach(element => {
+          observer.observe(element);
+        });
+      }
+
+      // Run on initial load
+      document.addEventListener('DOMContentLoaded', initScrollAnimations);
+      
+      // Run on ViewTransition swap
+      document.addEventListener('astro:after-swap', initScrollAnimations);
+    </script>
   </body>
 </html>

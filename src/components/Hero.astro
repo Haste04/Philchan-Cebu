@@ -1,93 +1,100 @@
 ---
-/**
- * Hero.astro
- * Above-the-fold section. Kept lightweight for optimal LCP performance.
- */
-import { testingCenter } from "../data/landingData";
-import { ArrowRight, ShieldCheck, Heart } from "@lucide/astro";
+import { Heart, ArrowRight, ShieldCheck, PhoneCall, Sparkles } from "@lucide/astro";
 ---
 
-<section
-  id="hero"
-  class="relative overflow-hidden bg-cream/30 dark:bg-slate-950 transition-colors duration-300"
->
-  <div
-    class="section-container grid gap-12 py-20 sm:py-28 lg:grid-cols-2 lg:items-center"
-  >
-    <!-- Left Column: Primary Pitch & CTAs -->
-    <div>
-      <div
-        class="mb-4 inline-flex items-center gap-2 rounded-full bg-deep-teal/10 dark:bg-emerald-500/15 border dark:border-emerald-500/30 px-4 py-1.5 text-xs font-semibold text-deep-teal dark:text-emerald-300 sm:text-sm"
-      >
-        <Heart
-          class="h-4 w-4 text-ribbon fill-ribbon dark:text-rose-400 dark:fill-rose-400"
-        />
-        <span>Philippine Catholic HIV/AIDS Network Inc. — Cebu Chapter</span>
-      </div>
+<section id="hero" class="relative overflow-hidden bg-health-white pt-32 pb-20 lg:pt-40 lg:pb-32">
+  {/* Abstract Soft Gradient Background */}
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-70 mix-blend-multiply"></div>
+    <div class="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] opacity-70 mix-blend-multiply"></div>
+  </div>
 
-      <h1
-        class="font-display text-4xl font-bold tracking-tight text-charcoal dark:text-slate-50 sm:text-5xl lg:text-6xl"
-      >
-        Compassionate care, <span class="text-ribbon dark:text-rose-400"
-          >rooted in faith.</span
+  <div class="mx-auto max-w-content px-6 relative z-10">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
+      {/* Text Content */}
+      <div class="lg:col-span-6 lg:pr-8 xl:pr-12 reveal-left">
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-health-white border border-health-green/10 px-4 py-2 text-xs font-bold tracking-wide uppercase text-health-green shadow-sm"
         >
-      </h1>
+          <Sparkles class="h-4 w-4 text-health-red" />
+          Modern Community Clinic
+        </div>
 
-      <p
-        class="mt-6 max-w-lg text-lg leading-relaxed text-charcoal/80 dark:text-slate-300"
-      >
-        PhilCHAN Cebu walks with every person affected by HIV/AIDS — offering
-        free, confidential testing and pastoral support guided by Catholic
-        social teaching and human dignity.
-      </p>
-
-      <!-- Trust Badges & CTAs -->
-      <div class="mt-8 flex flex-wrap items-center gap-4">
-        <a href="#testing" class="btn-primary inline-flex items-center gap-2">
-          <span>Get Free & Confidential Testing</span>
-          <ArrowRight class="h-4 w-4" />
-        </a>
-        <a
-          href="#about"
-          class="btn-secondary dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:border-slate-600"
+        <h1
+          class="font-display text-5xl font-bold tracking-tight text-health-text sm:text-6xl lg:text-7xl leading-[1.1]"
         >
-          Learn About Our Mission
-        </a>
-      </div>
+          Compassionate care, <span class="text-health-red block mt-2">rooted in faith.</span>
+        </h1>
 
-      <!-- Quick Trust Indicator -->
-      <div
-        class="mt-6 flex items-center gap-2 text-xs font-medium text-charcoal/60 dark:text-emerald-400"
-      >
-        <ShieldCheck class="h-4 w-4 text-deep-teal dark:text-emerald-400" />
-        <span>100% Confidential • Faith-Sensitive • Walk-ins Welcome</span>
-      </div>
-    </div>
+        <p class="mt-8 text-xl leading-relaxed text-health-text/70 max-w-lg">
+          PhilCHAN Cebu provides free, confidential HIV testing, pastoral support, 
+          and medical care in a dignified and welcoming environment.
+        </p>
 
-    <!-- Right Column: Partner & Diocesan Alignment Card -->
-    <div
-      class="rounded-2xl border border-mist dark:border-slate-800 bg-white/80 dark:bg-slate-900/90 p-8 shadow-card dark:shadow-2xl backdrop-blur-sm transition-colors duration-300"
-    >
-      <p
-        class="mb-6 text-center text-xs font-semibold uppercase tracking-wider text-charcoal/60 dark:text-slate-400"
-      >
-        In partnership with
-      </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 items-center">
+          <a href="#location" class="btn-primary w-full sm:w-auto text-lg py-4 px-8">
+            Find Testing Center
+            <ArrowRight class="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" />
+          </a>
+          <a href="tel:+639669109662" class="btn-secondary w-full sm:w-auto text-lg py-4 px-8 bg-transparent">
+            <PhoneCall class="h-5 w-5 mr-1" />
+            Call Hotline
+          </a>
+        </div>
 
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        {
-          Array.from({ length: 6 }).map((_, i) => (
-            <div
-              class="flex h-16 items-center justify-center rounded-lg border border-mist/50 dark:border-slate-800 bg-mist/30 dark:bg-slate-800/50 text-xs font-medium text-charcoal/40 dark:text-slate-400"
-              aria-hidden="true"
-            >
-              Logo {i + 1}
+        <div
+          class="mt-12 flex flex-wrap items-center gap-8 text-sm font-semibold text-health-text/60"
+        >
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-health-green-pale">
+              <ShieldCheck class="h-5 w-5 text-health-green" />
             </div>
-          ))
-        }
+            100% Confidential
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-health-red/10">
+              <Heart class="h-5 w-5 text-health-red" />
+            </div>
+            Free Testing
+          </div>
+        </div>
+      </div>
+
+      {/* Photo-Heavy Image Section */}
+      <div class="lg:col-span-6 relative reveal-right delay-200">
+        <div class="relative w-full h-[550px] lg:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-health-white">
+          <img 
+            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000&auto=format&fit=crop" 
+            alt="Smiling doctor in a bright, modern clinic" 
+            class="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-1000 ease-out"
+          />
+        </div>
+        
+        {/* Floating Trust Card with breathing animation */}
+        <div class="absolute -bottom-8 -left-8 sm:-left-12 sm:w-80 glass-card p-6 border border-white/50 animate-[float_6s_ease-in-out_infinite]">
+          <div class="flex items-start gap-4">
+            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green text-white shadow-md">
+              <ShieldCheck class="h-7 w-7" />
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-health-text text-xl">Safe & Trusted</h3>
+              <p class="mt-1.5 text-sm text-health-text/70 leading-relaxed font-medium">Professional medical team ready to support you with dignity.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  
+  <div class="absolute bottom-0 left-0 right-0">
+    <div class="divider-ribbon"></div>
+  </div>
 
-  <div class="divider-ribbon"></div>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+  </style>
 </section>

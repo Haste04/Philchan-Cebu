@@ -1,7 +1,8 @@
 ---
 /**
  * LeadershipCard.astro
- * Side-by-side card layout: Portrait image/avatar on the left, profile info & mini badges on the right.
+ * Modern immersive side-by-side card layout.
+ * Supports reversing the layout via `isReversed` prop.
  */
 import {
   User,
@@ -15,44 +16,45 @@ import type { LeaderProfile } from "../data/landingData";
 
 interface Props {
   profile: LeaderProfile;
+  isReversed?: boolean;
 }
 
-const { profile } = Astro.props;
+const { profile, isReversed = false } = Astro.props;
 
 const isMedical = profile.credentials?.some(
-  (c) => c.toLowerCase().includes("md") || c.toLowerCase().includes("doctor"),
+  (c) => c.toLowerCase().includes("md") || c.toLowerCase().includes("doctor")
 );
 const isClergy =
   profile.title?.toLowerCase().includes("rev") ||
   profile.title?.toLowerCase().includes("father");
 ---
 
-<div class="w-full py-2 transition-colors duration-300">
+<div class="w-full py-2 group">
   <div class="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 w-full">
-    <!-- LEFT CARD: Portrait Image / Avatar Container -->
-    <div class="lg:col-span-4 flex">
+    <!-- Image / Avatar Container -->
+    <div class={`lg:col-span-4 flex ${isReversed ? 'lg:order-last' : 'lg:order-first'}`}>
       <div
-        class="relative w-full overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-3 shadow-md border border-slate-100 dark:border-slate-800 flex items-center justify-center min-h-[300px]"
+        class="relative w-full overflow-hidden rounded-[2.5rem] bg-health-white p-2 shadow-soft border border-health-border/30 flex items-center justify-center min-h-[350px] transition-all duration-500 group-hover:shadow-card group-hover:border-health-green/20"
       >
         {
           profile.imagePath ? (
             <img
               src={`/${profile.imagePath.replace(/^\//, "")}`}
               alt={`Photo of ${profile.name}`}
-              class="h-full w-full rounded-2xl object-cover min-h-[280px]"
+              class="h-full w-full rounded-[2rem] object-cover min-h-[330px] transition-transform duration-700 ease-out group-hover:scale-105"
               loading="lazy"
               decoding="async"
             />
           ) : (
-            <div class="flex h-full w-full min-h-[280px] flex-col items-center justify-center rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-400">
+            <div class="flex h-full w-full min-h-[330px] flex-col items-center justify-center rounded-[2rem] bg-gradient-to-b from-health-bg to-health-white text-health-border/80 transition-transform duration-700 group-hover:scale-105">
               {isMedical ? (
-                <Stethoscope class="h-20 w-20" />
+                <Stethoscope class="h-20 w-20 text-health-green/40" />
               ) : isClergy ? (
-                <Church class="h-20 w-20" />
+                <Church class="h-20 w-20 text-health-green/40" />
               ) : (
-                <User class="h-20 w-20" />
+                <User class="h-20 w-20 text-health-green/40" />
               )}
-              <span class="mt-3 text-xs font-medium text-slate-400 dark:text-slate-400">
+              <span class="mt-4 text-xs font-bold uppercase tracking-wider text-health-text/40">
                 Photo Pending
               </span>
             </div>
@@ -61,27 +63,27 @@ const isClergy =
       </div>
     </div>
 
-    <!-- RIGHT CARD: Profile Details & Mini-Badge Grid -->
-    <div class="lg:col-span-8 flex">
+    <!-- Profile Details & Mini-Badge Grid -->
+    <div class={`lg:col-span-8 flex ${isReversed ? 'lg:order-first' : 'lg:order-last'}`}>
       <div
-        class="flex w-full flex-col justify-between rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-md border border-slate-100 dark:border-slate-800"
+        class="flex w-full flex-col justify-between glass-card p-8 sm:p-12 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl border-health-border/50"
       >
         <!-- Header & Bio -->
         <div>
           <span
-            class="text-xs font-bold uppercase tracking-wider text-ribbon dark:text-rose-400"
+            class="inline-block px-3 py-1 rounded-full bg-health-red/10 text-xs font-bold uppercase tracking-wider text-health-red"
           >
             {profile.title}
           </span>
           <h3
-            class="mt-1 font-display text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl"
+            class="mt-4 font-display text-3xl font-bold text-health-green sm:text-4xl"
           >
             {profile.name}
           </h3>
 
           {
             profile.bio && (
-              <p class="mt-4 text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
+              <p class="mt-6 text-lg font-medium leading-relaxed text-health-text/70">
                 {profile.bio}
               </p>
             )
@@ -89,30 +91,30 @@ const isClergy =
         </div>
 
         <!-- 2x2 Mini Highlight Grid -->
-        <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <!-- Badge 1: Role -->
           <div
-            class="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/70 p-3.5"
+            class="flex items-center gap-5 rounded-3xl border border-health-border/30 bg-health-white/50 p-4 transition-colors group-hover:bg-health-white"
           >
             <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200/60 dark:bg-slate-700 text-slate-700 dark:text-slate-200"
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green-pale text-health-green shadow-sm"
             >
               {
                 isClergy ? (
-                  <Church class="h-5 w-5" />
+                  <Church class="h-6 w-6" />
                 ) : (
-                  <Briefcase class="h-5 w-5" />
+                  <Briefcase class="h-6 w-6" />
                 )
               }
             </div>
             <div>
               <p
-                class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400"
+                class="text-[10px] font-bold uppercase tracking-wider text-health-text/50"
               >
                 Role
               </p>
               <p
-                class="text-xs font-bold text-slate-800 dark:text-slate-100 line-clamp-1"
+                class="text-sm font-bold text-health-text line-clamp-1"
               >
                 {profile.title}
               </p>
@@ -121,26 +123,26 @@ const isClergy =
 
           <!-- Badge 2: Field -->
           <div
-            class="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/70 p-3.5"
+            class="flex items-center gap-5 rounded-3xl border border-health-border/30 bg-health-white/50 p-4 transition-colors group-hover:bg-health-white"
           >
             <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200/60 dark:bg-slate-700 text-slate-700 dark:text-slate-200"
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green-pale text-health-green shadow-sm"
             >
               {
                 isMedical ? (
-                  <Stethoscope class="h-5 w-5" />
+                  <Stethoscope class="h-6 w-6" />
                 ) : (
-                  <GraduationCap class="h-5 w-5" />
+                  <GraduationCap class="h-6 w-6" />
                 )
               }
             </div>
             <div>
               <p
-                class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400"
+                class="text-[10px] font-bold uppercase tracking-wider text-health-text/50"
               >
                 Field
               </p>
-              <p class="text-xs font-bold text-slate-800 dark:text-slate-100">
+              <p class="text-sm font-bold text-health-text">
                 {
                   isMedical
                     ? "Medical Ministry"
@@ -156,30 +158,30 @@ const isClergy =
           {
             profile.credentials && profile.credentials.length > 0 ? (
               profile.credentials.slice(0, 2).map((cred) => (
-                <div class="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/70 p-3.5">
-                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200/60 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
-                    <Award class="h-5 w-5" />
+                <div class="flex items-center gap-5 rounded-3xl border border-health-border/30 bg-health-white/50 p-4 transition-colors group-hover:bg-health-white">
+                  <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green-pale text-health-green shadow-sm">
+                    <Award class="h-6 w-6" />
                   </div>
                   <div>
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-health-text/50">
                       Qualification
                     </p>
-                    <p class="text-xs font-bold text-slate-800 dark:text-slate-100 line-clamp-1">
+                    <p class="text-sm font-bold text-health-text line-clamp-1">
                       {cred}
                     </p>
                   </div>
                 </div>
               ))
             ) : (
-              <div class="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/70 p-3.5">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200/60 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
-                  <Award class="h-5 w-5" />
+              <div class="flex items-center gap-5 rounded-3xl border border-health-border/30 bg-health-white/50 p-4 transition-colors group-hover:bg-health-white">
+                <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green-pale text-health-green shadow-sm">
+                  <Award class="h-6 w-6" />
                 </div>
                 <div>
-                  <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-health-text/50">
                     Affiliation
                   </p>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <p class="text-sm font-bold text-health-text">
                     PhilCHAN Cebu
                   </p>
                 </div>

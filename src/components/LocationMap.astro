@@ -1,131 +1,137 @@
 ---
-/**
- * LocationMap.astro
- * Address + contact details alongside an embedded Google Map.
- * Performance note: iframe uses loading="lazy" to defer Map assets until scrolled into view.
- */
 import { testingCenter } from "../data/landingData";
-import { MapPin, Phone, Clock, Mail, Navigation } from "@lucide/astro";
+import { Clock, MapPin, Phone, Mail, Navigation } from "@lucide/astro";
 ---
 
-<section
-  id="location"
-  class="section-container py-16 transition-colors duration-300"
->
-  <h2
-    class="text-display-lg text-center font-display font-semibold text-charcoal dark:text-slate-100"
-  >
-    Visit Us
-  </h2>
-
-  <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start">
-    <!-- Contact & Details Card -->
-    <div
-      class="rounded-2xl border border-mist dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-card transition-colors duration-300"
+<section id="location" class="section-container relative z-10 bg-health-bg py-16 sm:py-20 overflow-hidden">
+  <div class="mb-10 text-center max-w-3xl mx-auto reveal">
+    <h2
+      class="text-4xl sm:text-5xl font-display font-bold text-health-text"
     >
-      <h3
-        class="font-display text-xl font-semibold text-charcoal dark:text-slate-100"
-      >
-        {testingCenter.name}
-      </h3>
+      Find Us
+    </h2>
+    <p class="mt-4 text-lg text-health-text/70 font-medium">
+      Our clinic is located at Mt. Zion Center in Talamban.
+    </p>
+  </div>
 
-      <!-- Address -->
-      <div
-        class="mt-4 flex items-start gap-3 text-charcoal/80 dark:text-slate-300"
-      >
-        <MapPin class="mt-1 h-5 w-5 shrink-0 text-ribbon dark:text-rose-400" />
-        <address class="not-italic">
-          {testingCenter.addressLines.map((line) => <p>{line}</p>)}
-        </address>
-      </div>
+  <div class="grid gap-8 lg:grid-cols-12 lg:gap-8 items-stretch max-w-7xl mx-auto">
+    {/* Contact Information Card */}
+    <div class="lg:col-span-5 relative z-20 reveal-left delay-200">
+      <div class="glass-card h-full p-8 border border-health-white/60 shadow-xl flex flex-col justify-between">
+        <div>
+          <h3
+            class="font-display text-2xl font-bold text-health-green"
+          >
+            {testingCenter.name}
+          </h3>
 
-      <!-- Hours -->
-      {
-        testingCenter.hours && testingCenter.hours.length > 0 && (
-          <div class="mt-6 border-t border-mist/60 dark:border-slate-800 pt-6">
-            <p class="flex items-center gap-2 font-semibold text-charcoal/80 dark:text-slate-200 text-sm">
-              <Clock class="h-4 w-4 text-deep-teal dark:text-emerald-400" />
-              <span>Operating Hours</span>
-            </p>
-            <ul class="mt-2 space-y-1 text-sm text-charcoal/70 dark:text-slate-400 pl-6">
-              {testingCenter.hours.map((h) => (
-                <li class="flex justify-between sm:justify-start sm:gap-6">
-                  <span class="font-medium text-charcoal/80 dark:text-slate-300">
-                    {h.day}:
-                  </span>
-                  <span>{h.time}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
-
-      <!-- Contact Numbers & Email -->
-      <div class="mt-6 border-t border-mist/60 dark:border-slate-800 pt-6">
-        <dl class="space-y-3 text-sm">
-          {
-            testingCenter.contactNumbers.map((c) => (
-              <div class="flex items-center gap-3">
-                <Phone class="h-4 w-4 shrink-0 text-deep-teal dark:text-emerald-400" />
-                <dt class="font-semibold text-charcoal/60 dark:text-slate-400">
-                  {c.label}:
-                </dt>
-                <dd>
-                  <a
-                    href={c.href}
-                    class="text-deep-teal dark:text-emerald-400 hover:underline font-medium"
-                  >
-                    {c.number}
-                  </a>
-                </dd>
+          <div class="mt-8 space-y-5">
+            <div class="flex items-start gap-4 group">
+              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-health-green-pale transition-transform group-hover:scale-110 group-hover:bg-health-green group-hover:text-white text-health-green shadow-sm">
+                <MapPin class="h-5 w-5 transition-colors" />
               </div>
-            ))
-          }
-          <div class="flex items-center gap-3">
-            <Mail
-              class="h-4 w-4 shrink-0 text-deep-teal dark:text-emerald-400"
-            />
-            <dt class="font-semibold text-charcoal/60 dark:text-slate-400">
-              Email:
-            </dt>
-            <dd>
-              <a
-                href={`mailto:${testingCenter.email}`}
-                class="text-deep-teal dark:text-emerald-400 hover:underline font-medium"
-              >
-                {testingCenter.email}
-              </a>
-            </dd>
-          </div>
-        </dl>
-      </div>
+              <div>
+                <p class="font-bold text-health-text text-base mb-0.5">Address</p>
+                {
+                  testingCenter.addressLines.map((line) => (
+                    <p class="text-health-text/70 font-medium text-sm">{line}</p>
+                  ))
+                }
+              </div>
+            </div>
 
-      <!-- Directions CTA Button -->
-      <a
-        href={testingCenter.mapDirectionsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-secondary mt-8 inline-flex items-center gap-2 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-700"
-      >
-        <Navigation class="h-4 w-4" />
-        <span>Get Directions</span>
-      </a>
+            <div class="flex items-start gap-4 group">
+              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-health-green-pale transition-transform group-hover:scale-110 group-hover:bg-health-green group-hover:text-white text-health-green shadow-sm">
+                <Clock class="h-5 w-5 transition-colors" />
+              </div>
+              <div class="w-full">
+                <p class="font-bold text-health-text text-base mb-1">Clinic Hours</p>
+                <ul class="space-y-1.5 text-health-text/70 font-medium text-sm">
+                  {
+                    testingCenter.hours.map((hour) => (
+                      <li class="flex justify-between items-center gap-4 border-b border-health-border/30 pb-1.5 last:border-0 last:pb-0">
+                        <span>{hour.day}</span>
+                        <span class="font-bold text-health-green">{hour.time}</span>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 group">
+              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-health-red/10 transition-transform group-hover:scale-110 group-hover:bg-health-red group-hover:text-white text-health-red shadow-sm">
+                <Phone class="h-5 w-5 transition-colors" />
+              </div>
+              <div>
+                <p class="font-bold text-health-text text-base mb-0.5">Hotline</p>
+                {
+                  testingCenter.contactNumbers.map((contact) => (
+                    <div class="mt-0.5">
+                      <a
+                        href={contact.href}
+                        class="text-health-red hover:text-health-red-dark font-bold text-base transition-colors"
+                      >
+                        {contact.number}
+                      </a>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 group">
+              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-health-green-pale transition-transform group-hover:scale-110 group-hover:bg-health-green group-hover:text-white text-health-green shadow-sm">
+                <Mail class="h-5 w-5 transition-colors" />
+              </div>
+              <div>
+                <p class="font-bold text-health-text text-base mb-0.5">Email</p>
+                <a
+                  href={`mailto:${testingCenter.email}`}
+                  class="text-health-green hover:text-health-green-light font-bold text-sm transition-colors"
+                >
+                  {testingCenter.email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-health-border/40">
+          <a
+            href={testingCenter.mapDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary w-full justify-center rounded-xl py-3 text-base shadow-sm hover:shadow-md"
+          >
+            <Navigation class="mr-2 h-5 w-5" />
+            Get Directions
+          </a>
+        </div>
+      </div>
     </div>
 
-    <!-- Map Embed -->
-    <div
-      class="overflow-hidden rounded-2xl border border-mist dark:border-slate-800 shadow-card min-h-[400px] dark:bg-slate-900"
-    >
-      <iframe
-        src={testingCenter.mapEmbedSrc}
-        width="100%"
-        height="100%"
-        class="min-h-[400px] w-full transition-all duration-300 dark:invert dark:hue-rotate-180 dark:contrast-[0.85]"
-        style="border:0;"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title={`Map showing the location of ${testingCenter.name}`}></iframe>
+    {/* Map Container */}
+    <div class="lg:col-span-7 relative h-[400px] lg:h-auto min-h-[400px] reveal-right delay-400">
+      <div
+        class="h-full w-full overflow-hidden rounded-[2.5rem] shadow-xl border-[6px] border-health-white/80 bg-health-white/50 backdrop-blur-md relative z-10"
+      >
+        <iframe
+          src={testingCenter.mapEmbedSrc}
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Google Maps Location for PhilCHAN Cebu"
+          class="h-full w-full object-cover grayscale-[10%] contrast-110 hover:grayscale-0 transition-all duration-700"
+        ></iframe>
+      </div>
+      
+      {/* Decorative Blur behind map */}
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-lg max-h-lg bg-health-green-pale/80 blur-[80px] rounded-full z-0 mix-blend-multiply"></div>
     </div>
   </div>
 </section>

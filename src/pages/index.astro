@@ -2,14 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
-import MissionVision from "../components/MissionVision.astro";
-import LeadershipCard from "../components/LeadershipCard.astro";
-import OrgChart from "../components/OrgChart.astro";
 import TestingInfo from "../components/TestingInfo.astro";
 import LocationMap from "../components/LocationMap.astro";
 import Footer from "../components/Footer.astro";
-import { leadershipProfiles } from "../data/landingData";
 ---
 
 <Layout
@@ -20,34 +15,9 @@ import { leadershipProfiles } from "../data/landingData";
 
   <main
     id="main"
-    class="bg-white dark:bg-slate-950 transition-colors duration-300"
+    class="bg-health-white transition-colors duration-300"
   >
     <Hero />
-    <About />
-    <MissionVision />
-
-    <section id="leadership" class="section-container py-16 sm:py-24">
-      <h2
-        class="text-display-lg text-center font-semibold text-slate-900 dark:text-slate-100"
-      >
-        Our Leadership
-      </h2>
-      <p
-        class="mx-auto mt-4 max-w-2xl text-center text-slate-600 dark:text-slate-300"
-      >
-        A multidisciplinary team of medical, pastoral, and community leaders.
-      </p>
-
-      <div class="mt-12 flex flex-col gap-8 max-w-5xl mx-auto px-4">
-        {
-          leadershipProfiles
-            .sort((a, b) => a.order - b.order)
-            .map((profile) => <LeadershipCard profile={profile} />)
-        }
-      </div>
-    </section>
-
-    <OrgChart />
     <TestingInfo />
     <LocationMap />
   </main>

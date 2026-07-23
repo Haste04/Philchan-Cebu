@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import About from "../components/About.astro";
+import MissionVision from "../components/MissionVision.astro";
+import LeadershipCard from "../components/LeadershipCard.astro";
+import OrgChart from "../components/OrgChart.astro";
+import Footer from "../components/Footer.astro";
+import { leadershipProfiles } from "../data/landingData";
+---
+
+<Layout
+  title="About Us | PhilCHAN Cebu"
+  description="Learn about the mission, vision, and leadership of PhilCHAN Cebu."
+>
+  <Navbar />
+
+  <main
+    id="main"
+    class="bg-health-white transition-colors duration-300 overflow-x-hidden"
+  >
+    <div class="relative pt-24 pb-24 bg-health-bg overflow-hidden">
+      {/* Decorative Blur */}
+      <div class="absolute -top-1/2 left-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-60"></div>
+      
+      <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green">Our Story</div>
+        <h1 class="text-6xl sm:text-7xl font-display font-bold text-health-text tracking-tight">About Us</h1>
+        <p class="mt-8 text-xl text-health-text/70 max-w-2xl mx-auto font-medium leading-relaxed">
+          Discover the mission, vision, and the compassionate team behind PhilCHAN Cebu's commitment to faith-based health services.
+        </p>
+      </div>
+    </div>
+    
+    <About />
+    <MissionVision />
+
+    <section id="leadership" class="section-container relative z-10 py-24 sm:py-32 overflow-hidden bg-health-white">
+      <div class="reveal mb-20 text-center">
+        <h2
+          class="text-5xl sm:text-6xl font-display font-bold text-health-text tracking-tight"
+        >
+          Our Leadership
+        </h2>
+        <p
+          class="mx-auto mt-6 max-w-2xl text-xl text-health-text/70 font-medium"
+        >
+          A multidisciplinary team of medical, pastoral, and community leaders working together.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-12 max-w-5xl mx-auto">
+        {
+          leadershipProfiles
+            .sort((a, b) => a.order - b.order)
+            .map((profile, index) => {
+              const isReversed = index % 2 !== 0;
+              const animationClass = isReversed ? "reveal-right" : "reveal-left";
+              return (
+                <div class={`${animationClass} delay-200`}>
+                  <LeadershipCard profile={profile} isReversed={isReversed} />
+                </div>
+              );
+            })
+        }
+      </div>
+    </section>
+
+    <OrgChart />
+  </main>
+
+  <Footer />
+</Layout>

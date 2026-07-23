@@ -1,0 +1,72 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { preventionTips } from "../data/landingData";
+import { Stethoscope, Shield, Pill, Users, Activity } from "@lucide/astro";
+
+const icons = {
+  Stethoscope,
+  Shield,
+  Pill,
+  Users,
+  Activity
+};
+---
+
+<Layout
+  title="Prevention & Tips | PhilCHAN Cebu"
+  description="Learn how to protect yourself and others with these HIV prevention tips."
+>
+  <Navbar />
+
+  <main
+    id="main"
+    class="bg-health-white transition-colors duration-300 min-h-screen"
+  >
+    <div class="relative pt-40 pb-24 bg-health-bg overflow-hidden">
+      {/* Decorative Blur */}
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[80px] opacity-70"></div>
+      
+      <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-red">Knowledge is Power</div>
+        <h1 class="text-6xl sm:text-7xl font-display font-bold text-health-text tracking-tight">Prevention & Tips</h1>
+        <p class="mt-8 text-xl text-health-text/70 max-w-2xl mx-auto font-medium leading-relaxed">
+          Knowledge is the first step to protection. Explore our resources to understand how to maintain your health and the health of your loved ones through effective prevention strategies.
+        </p>
+      </div>
+    </div>
+    
+    <section class="section-container relative z-10">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        {
+          preventionTips.map((tip, index) => {
+            const Icon = icons[tip.icon as keyof typeof icons];
+            return (
+              <div class={`glass-card p-10 flex flex-col items-start group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 reveal delay-${(index % 3 + 1) * 100}`}>
+                <div class="h-16 w-16 rounded-3xl bg-health-red text-white flex items-center justify-center mb-8 shadow-md group-hover:scale-110 transition-transform duration-500">
+                  {Icon && <Icon class="h-8 w-8" />}
+                </div>
+                <h3 class="text-2xl font-display font-bold text-health-green mb-4">{tip.title}</h3>
+                <p class="text-health-text/70 leading-relaxed font-medium text-lg">{tip.description}</p>
+              </div>
+            );
+          })
+        }
+      </div>
+      
+      <div class="mt-32 max-w-4xl mx-auto relative overflow-hidden rounded-[3rem] p-10 sm:p-16 text-center shadow-2xl border-4 border-health-white reveal delay-300 group">
+        <div class="absolute inset-0 bg-gradient-to-br from-health-green-pale to-health-green/20 group-hover:scale-105 transition-transform duration-700"></div>
+        <div class="relative z-10">
+          <h2 class="text-4xl sm:text-5xl font-display font-bold text-health-green">Need more information?</h2>
+          <p class="mt-6 text-health-text/80 text-xl font-medium max-w-2xl mx-auto mb-10 leading-relaxed">Our pastoral care and medical team are available for confidential counseling and answering any questions you may have about HIV prevention and care.</p>
+          <a href="/#location" class="btn-primary inline-flex py-4 px-10 text-lg shadow-lg">
+            Visit Our Center
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
