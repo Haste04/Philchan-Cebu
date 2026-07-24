@@ -1,60 +1,68 @@
 ---
 /**
  * EnhancedServicesGrid.astro
- * Expanded services grid — smooth, organic entrance and hover animations.
+ * Categorized services listing: Health Promotion, Medical Services,
+ * Psycho-Spiritual & Psychosocial Services.
  */
-import { Heart, Activity, Church, Users, ShieldCheck, Stethoscope } from "@lucide/astro";
+import { Heart, Stethoscope, UsersRound } from "@lucide/astro";
 
-interface ServiceCard {
+interface ServiceCategory {
   title: string;
-  description: string;
   icon: any;
-  color: "health-red" | "health-green";
-  since: string;
+  items: string[];
+  subtexts?: Record<string, string>;
 }
 
-const services: ServiceCard[] = [
+const categories: ServiceCategory[] = [
   {
-    title: "Confidential HIV Testing",
-    description: "Rapid, safe, and completely free testing conducted with the highest standards of privacy and clinical accuracy by professional medical staff.",
-    icon: Activity,
-    color: "health-red",
-    since: "2019",
-  },
-  {
-    title: "Pastoral Care & Counseling",
-    description: "Faith-based emotional and spiritual support tailored to your journey, provided in a welcoming, non-judgmental space by trained pastoral counselors.",
-    icon: Church,
-    color: "health-green",
-    since: "2018",
-  },
-  {
-    title: "Medical Navigation",
-    description: "Professional guidance through healthcare systems, including assistance with treatment access, referrals, and ongoing care coordination with partner institutions.",
-    icon: ShieldCheck,
-    color: "health-green",
-    since: "2018",
-  },
-  {
-    title: "Community Education & Outreach",
-    description: "Barangay-level lay forums, school HIV lectures, workplace awareness sessions, and mobile education programs designed to break down stigma.",
-    icon: Users,
-    color: "health-green",
-    since: "2023",
-  },
-  {
-    title: "Mobile Medical Missions",
-    description: "Medical consultations, medicine distribution, health education, and spiritual care brought directly to underserved communities across Cebu.",
+    title: "Health Promotion",
     icon: Heart,
-    color: "health-red",
-    since: "2025",
+    items: [
+      "HIV and AIDS Education and Awareness",
+      "STI and Hepatitis Awareness",
+      "Prevention of Mother-to-Child Transmission",
+      "Drug & Harm Reduction Awareness",
+      "Mental Health Education and Awareness",
+      "Human Rights and Paralegal Services",
+    ],
   },
   {
-    title: "Partnership Events",
-    description: "Collaborations with Cebu City Health, MHRP, LoveYourself, Cebu Caritas, and ASOG Ateneo to expand HIV prevention, research, and care networks.",
+    title: "Medical Services",
     icon: Stethoscope,
-    color: "health-green",
-    since: "2023",
+    items: [
+      "HIV Testing Services",
+      "Syphilis Screening",
+      "HBsAg Screening (Hepatitis B)",
+      "Anti-HCV Screening (Hepatitis C)",
+      "CD4 Count and Viral Load Testing",
+      "Minor Surgeries",
+      "Medical and Surgical Checkup",
+      "Free Medicines",
+      "Vaccinations",
+    ],
+    subtexts: {
+      "HIV Testing Services": "Community-Based Screening, Facility-Based Screening",
+      "Free Medicines": "ARV, Pre-Exposure Prophylaxis, Prescription Drugs, Food Supplements",
+    },
+  },
+  {
+    title: "Psycho-Spiritual & Psychosocial Services",
+    icon: UsersRound,
+    items: [
+      "Spiritual Accompaniment",
+      "Motivational Interviewing",
+      "Social Case Studies",
+      "Counseling",
+      "Client-Centered Case Management",
+      "Support Group Session",
+      "Learning Group Session",
+      "Focus Group Discussion",
+      "Assistance for Individual Crisis Intervention",
+      "Burial Assistance and Services",
+    ],
+    subtexts: {
+      "Counseling": "Family Disclosure, Treatment Adherence, and Others",
+    },
   },
 ];
 ---
@@ -72,49 +80,47 @@ const services: ServiceCard[] = [
         What We Offer
       </div>
       <h2 class="font-display text-5xl sm:text-6xl font-bold tracking-tight text-health-text">
-        Our Full Range of Services
+        Our Services
       </h2>
       <p class="mt-8 text-xl leading-relaxed text-health-text/70 font-medium">
         From free rapid testing to community outreach, each service is rooted in compassion, dignity, and professional care.
       </p>
     </div>
 
-    <div id="sgrid-trigger" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
       {
-        services.map((service, index) => {
-          const Icon = service.icon;
-          const isRed = service.color === "health-red";
-          
+        categories.map((cat, idx) => {
+          const Icon = cat.icon;
           return (
-            <div class="srv-card glass-card p-8 sm:p-10 flex flex-col items-center text-center border border-health-border/40 group" data-idx={index}>
-              <div class="srv-icon-wrap h-16 w-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm transition-all duration-500 ${isRed ? 'bg-health-red text-white' : 'bg-health-green-pale text-health-green group-hover:bg-health-green group-hover:text-white'}">
-                <Icon class="h-8 w-8" />
+            <div class="srv-card glass-card p-8 sm:p-10 flex flex-col border border-health-border/40" data-idx={idx}>
+              <div class="flex items-center gap-3 mb-6">
+                <div class={cat.title.includes("Psycho-Spiritual") ? "srv-icon-wrap h-14 w-20 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-3" : "srv-icon-wrap h-14 w-16 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-2"}>
+                  <Icon class="h-7 w-7" />
+                </div>
+                <h3 class="text-xl font-display font-bold text-health-red">{cat.title}</h3>
               </div>
-              <h3 class="text-2xl font-display font-bold mb-2 ${isRed ? 'text-health-red' : 'text-health-green'}">
-                {service.title}
-              </h3>
-              <span class="inline-block px-3 py-1 rounded-full bg-health-green-pale/60 text-xs font-bold uppercase tracking-wider text-health-green mb-4">
-                Since {service.since}
-              </span>
-              <p class="text-health-text/70 leading-relaxed font-medium text-base">
-                {service.description}
-              </p>
+              <ul class="space-y-3 flex-1">
+                {cat.items.map((item) => (
+                  <li class="flex items-start gap-3 text-health-text/80 text-sm leading-relaxed">
+                    <span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-health-green shrink-0"></span>
+                    <span>
+                      <span class="font-semibold text-health-text">{item}</span>
+                      {cat.subtexts?.[item] && (
+                        <span class="block text-health-text/50 text-xs mt-0.5">{cat.subtexts[item]}</span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           );
         })
       }
     </div>
-
-    <div class="mt-16 text-center reveal delay-500">
-      <a href="/#location" class="btn-primary py-3.5 px-10 text-base shadow-lg">
-        Visit Our Center
-      </a>
-    </div>
   </div>
 </section>
 
 <style is:global>
-  /* === SMOOTH CARD ENTRANCE === */
   .srv-card {
     opacity: 0 !important;
     transform: translateY(30px) scale(0.97) !important;
@@ -129,7 +135,6 @@ const services: ServiceCard[] = [
     transform: translateY(0) scale(1) !important;
   }
 
-  /* === SMOOTH 3D HOVER === */
   .srv-card {
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -169,11 +174,11 @@ const services: ServiceCard[] = [
 <script is:inline>
   (function() {
     function initSrvAnim() {
-      var grid = document.getElementById('sgrid-trigger');
+      var grid = document.getElementById('enhanced-services');
       if (!grid) return;
+      var cards = grid.querySelectorAll('.srv-card');
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        var cards = grid.querySelectorAll('.srv-card');
         for (var i = 0; i < cards.length; i++) cards[i].classList.add('srv-visible');
         return;
       }
@@ -181,15 +186,14 @@ const services: ServiceCard[] = [
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            var cards = grid.querySelectorAll('.srv-card');
             for (var i = 0; i < cards.length; i++) {
               (function(idx) {
                 setTimeout(function() {
                   cards[idx].classList.add('srv-visible');
-                }, idx * 80); // tight stagger = fluid wave
+                }, idx * 80);
               })(i);
             }
-            observer.unobserve(grid);
+            observer.unobserve(entry.target);
           }
         });
       }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
