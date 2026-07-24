@@ -1,0 +1,201 @@
+﻿---
+/**
+ * music.astro
+ * Music page - play original PhilCHAN Cebu tracks with a fixed bottom player bar.
+ */
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { Music, Play, Pause, SkipBack, SkipForward, Volume2 } from "@lucide/astro";
+---
+
+<Layout
+  title="Our Music | PhilCHAN Cebu"
+  description="Listen to original PhilCHAN Cebu music - PhilCHAN Cebu, version 2.0, and Hope that Never Ends."
+>
+  <Navbar />
+
+  <main
+    id="main"
+    class="bg-health-white transition-colors duration-300 overflow-x-hidden pb-32"
+  >
+    <div class="relative pt-40 pb-24 bg-health-bg overflow-hidden">
+      <div class="absolute -top-1/2 left-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-60"></div>
+      <div class="absolute -bottom-1/2 right-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[80px] opacity-70"></div>
+      <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
+        <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green">
+          <Music class="h-4 w-4" />
+          Listen
+        </div>
+        <h1 class="text-6xl sm:text-7xl font-display font-bold text-health-text tracking-tight">Our Music</h1>
+        <p class="mt-8 text-xl text-health-text/70 max-w-2xl mx-auto font-medium leading-relaxed">Listen to original PhilCHAN Cebu music.</p>
+      </div>
+    </div>
+
+    <section class="section-container">
+      <div class="reveal mb-10 text-center">
+        <h2 class="text-5xl sm:text-6xl font-display font-bold text-health-text tracking-tight">Tracks</h2>
+      </div>
+      <div class="max-w-2xl mx-auto flex flex-col gap-4">
+        <button data-track-index="0" class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft">
+          <span class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg">1</span>
+          <span class="flex-1 font-body font-semibold text-health-text text-lg truncate">PhilCHAN Cebu</span>
+          <span class="flex-shrink-0 text-health-green">
+            <Play class="h-6 w-6 track-play-icon" />
+            <Pause class="h-6 w-6 track-pause-icon hidden" />
+          </span>
+        </button>
+        <button data-track-index="1" class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft">
+          <span class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg">2</span>
+          <span class="flex-1 font-body font-semibold text-health-text text-lg truncate">PhilCHAN Cebu version 2.0</span>
+          <span class="flex-shrink-0 text-health-green">
+            <Play class="h-6 w-6 track-play-icon" />
+            <Pause class="h-6 w-6 track-pause-icon hidden" />
+          </span>
+        </button>
+        <button data-track-index="2" class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft">
+          <span class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg">3</span>
+          <span class="flex-1 font-body font-semibold text-health-text text-lg truncate">Hope that Never Ends</span>
+          <span class="flex-shrink-0 text-health-green">
+            <Play class="h-6 w-6 track-play-icon" />
+            <Pause class="h-6 w-6 track-pause-icon hidden" />
+          </span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div id="music-player-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-health-green text-white hidden">
+    <div class="px-4 pt-3 pb-1">
+      <input type="range" id="player-progress" min="0" max="100" value="0" class="w-full h-1 appearance-none bg-white/30 rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-md" />
+    </div>
+    <div class="flex items-center gap-4 px-4 pb-3">
+      <div class="flex-1 min-w-0">
+        <p id="player-track-name" class="text-sm font-semibold truncate">&nbsp;</p>
+        <p class="text-xs text-white/70">
+          <span id="player-current-time">0:00</span>
+          <span> / </span>
+          <span id="player-duration">0:00</span>
+        </p>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="player-prev" class="p-2 rounded-full hover:bg-white/10 transition-colors" aria-label="Previous track"><SkipBack class="h-5 w-5" /></button>
+        <button id="player-play-pause" class="p-2 rounded-full hover:bg-white/10 transition-colors" aria-label="Play or pause">
+          <Play id="player-play-icon" class="h-6 w-6" />
+          <Pause id="player-pause-icon" class="h-6 w-6 hidden" />
+        </button>
+        <button id="player-next" class="p-2 rounded-full hover:bg-white/10 transition-colors" aria-label="Next track"><SkipForward class="h-5 w-5" /></button>
+      </div>
+      <div class="flex items-center gap-2 flex-1 justify-end min-w-0">
+        <Volume2 class="h-5 w-5 flex-shrink-0" />
+        <input type="range" id="player-volume" min="0" max="100" value="100" class="w-24 h-1 appearance-none bg-white/30 rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-md" />
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<script is:inline>
+  (function () {
+    const TRACKS_RAW = [
+      { name: "PhilCHAN Cebu", src: "/musics/PhilCHAN Cebu.mp3" },
+      { name: "PhilCHAN Cebu version 2.0", src: "/musics/PhilCHAN Cebu version 2.0.mp3" },
+      { name: "Hope that Never Ends", src: "/musics/PhilCHAN Cebu version 2.1 - Hope that Never Ends.mp3" },
+    ];
+    let audio = null;
+    let currentIndex = -1;
+    let isPlaying = false;
+    if (window.__philchanAudio) { audio = window.__philchanAudio; currentIndex = window.__philchanCurrentIndex ?? -1; isPlaying = !audio.paused; }
+    function formatTime(seconds) { if (isNaN(seconds) || !isFinite(seconds)) return "0:00"; const m = Math.floor(seconds / 60); const s = Math.floor(seconds % 60); return m + ":" + String(s).padStart(2, "0"); }
+    function getEl(id) { return document.getElementById(id); }
+    let lastInitBar = null;
+
+    function init() {
+      const trackCards = document.querySelectorAll("[data-track-index]");
+      if (!trackCards.length) return;
+      const bar = getEl("music-player-bar");
+      if (bar === lastInitBar) return;
+      lastInitBar = bar;
+      const playPauseBtn = getEl("player-play-pause");
+      const prevBtn = getEl("player-prev");
+      const nextBtn = getEl("player-next");
+      const progressEl = getEl("player-progress");
+      const volumeEl = getEl("player-volume");
+      const trackNameEl = getEl("player-track-name");
+      const currentTimeEl = getEl("player-current-time");
+      const durationEl = getEl("player-duration");
+      const playIcon = getEl("player-play-icon");
+      const pauseIcon = getEl("player-pause-icon");
+
+      function updateTrackCardStyles() {
+        document.querySelectorAll(".track-card").forEach((card) => {
+          const idx = parseInt(card.dataset.trackIndex);
+          const playIconEl = card.querySelector(".track-play-icon");
+          const pauseIconEl = card.querySelector(".track-pause-icon");
+          if (idx === currentIndex) {
+            card.classList.add("border-l-health-green", "bg-health-green-pale");
+            card.classList.remove("border-l-transparent");
+            if (isPlaying) { playIconEl.classList.add("hidden"); pauseIconEl.classList.remove("hidden"); }
+            else { playIconEl.classList.remove("hidden"); pauseIconEl.classList.add("hidden"); }
+          } else {
+            card.classList.remove("border-l-health-green", "bg-health-green-pale");
+            card.classList.add("border-l-transparent");
+            playIconEl.classList.remove("hidden");
+            pauseIconEl.classList.add("hidden");
+          }
+        });
+      }
+
+      function updatePlayerUIVisibility() { if (currentIndex >= 0) bar.classList.remove("hidden"); else bar.classList.add("hidden"); }
+      function updatePlayerPlayPauseIcon() {
+        if (!playIcon || !pauseIcon) return;
+        if (isPlaying) { playIcon.classList.add("hidden"); pauseIcon.classList.remove("hidden"); }
+        else { playIcon.classList.remove("hidden"); pauseIcon.classList.add("hidden"); }
+      }
+
+      function updateProgress() {
+        if (!audio || !progressEl || !currentTimeEl) return;
+        const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+        progressEl.value = pct;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        if (durationEl && audio.duration && isFinite(audio.duration)) durationEl.textContent = formatTime(audio.duration);
+      }
+
+      function updateAllUI() {
+        updatePlayerUIVisibility(); updateTrackCardStyles(); updatePlayerPlayPauseIcon(); updateProgress();
+        if (trackNameEl && currentIndex >= 0) trackNameEl.textContent = TRACKS_RAW[currentIndex].name;
+        if (volumeEl && audio) volumeEl.value = Math.round(audio.volume * 100);
+      }
+
+      function loadTrack(index) {
+        if (!audio) { audio = new Audio(); audio.addEventListener("timeupdate", updateProgress); audio.addEventListener("ended", next); audio.addEventListener("loadedmetadata", updateProgress); window.__philchanAudio = audio; }
+        currentIndex = index; window.__philchanCurrentIndex = currentIndex;
+        audio.src = encodeURI(TRACKS_RAW[index].src);
+        audio.play().then(() => { isPlaying = true; updateAllUI(); }).catch(() => { isPlaying = false; updateAllUI(); });
+      }
+
+      function playPause() {
+        if (!audio || currentIndex < 0) return;
+        if (audio.paused) { audio.play().then(() => { isPlaying = true; updateAllUI(); }).catch(() => {}); }
+        else { audio.pause(); isPlaying = false; updateAllUI(); }
+      }
+
+      function next() { if (currentIndex < 0) return; loadTrack((currentIndex + 1) % TRACKS_RAW.length); }
+      function prev() { if (currentIndex < 0) return; loadTrack((currentIndex - 1 + TRACKS_RAW.length) % TRACKS_RAW.length); }
+
+      trackCards.forEach((card) => {
+        card.addEventListener("click", () => { const idx = parseInt(card.dataset.trackIndex); if (idx === currentIndex) playPause(); else loadTrack(idx); });
+      });
+      playPauseBtn.addEventListener("click", (e) => { e.stopPropagation(); playPause(); });
+      prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prev(); });
+      nextBtn.addEventListener("click", (e) => { e.stopPropagation(); next(); });
+      progressEl.addEventListener("input", () => { if (!audio || !audio.duration) return; audio.currentTime = (parseFloat(progressEl.value) / 100) * audio.duration; });
+      volumeEl.addEventListener("input", () => { if (!audio) return; audio.volume = parseFloat(volumeEl.value) / 100; });
+      updateAllUI();
+    }
+
+    document.addEventListener("astro:after-swap", init);
+    init();
+  })();
+</script>
