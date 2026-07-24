@@ -18,6 +18,7 @@ export const navItems: NavItem[] = [
   { label: "About Us", href: "/about" },
   { label: "Services & History", href: "/services" },
   { label: "Prevention & Tips", href: "/prevention" },
+  { label: "Music", href: "/music" },
 ];
 
 // ---------------------------------------------------------------------
