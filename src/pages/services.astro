@@ -1,0 +1,76 @@
+---
+/**
+ * services.astro
+ * Services & History page — medical timeline + expanded services grid.
+ * Fully additive: does not modify any existing page or component.
+ */
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import ServiceTimeline from "../components/ServiceTimeline.astro";
+import EnhancedServicesGrid from "../components/EnhancedServicesGrid.astro";
+import Footer from "../components/Footer.astro";
+import { Heart, ArrowRight } from "@lucide/astro";
+---
+
+<Layout
+  title="Services & History | PhilCHAN Cebu"
+  description="Explore PhilCHAN Cebu's medical and service history — from our founding in 1992 to today's free HIV testing, mobile medical missions, and community outreach."
+>
+  <Navbar />
+
+  <main
+    id="main"
+    class="bg-health-white transition-colors duration-300 overflow-x-hidden"
+  >
+    <!-- Hero Banner -->
+    <div class="relative pt-40 pb-24 bg-health-bg overflow-hidden">
+      <div class="absolute -top-1/2 left-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-60"></div>
+      <div class="absolute -bottom-1/2 right-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[80px] opacity-70"></div>
+      
+      <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
+        <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green">
+          <Heart class="h-4 w-4 text-health-red" />
+          Faith in Action
+        </div>
+        <h1 class="text-6xl sm:text-7xl font-display font-bold text-health-text tracking-tight">
+          Our Services & History
+        </h1>
+        <p class="mt-8 text-xl text-health-text/70 max-w-3xl mx-auto font-medium leading-relaxed">
+          Faith in action — decades of compassionate care for Central Visayas. 
+          Explore our timeline of milestones and the full range of services we offer.
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <ServiceTimeline />
+
+    <!-- Divider -->
+    <div class="mx-auto max-w-content px-6">
+      <div class="divider-ribbon opacity-80"></div>
+    </div>
+
+    <!-- Enhanced Services Grid -->
+    <EnhancedServicesGrid />
+
+    <!-- Call to Action -->
+    <section class="section-container relative z-10 bg-health-bg">
+      <div class="max-w-4xl mx-auto relative overflow-hidden rounded-[3rem] p-10 sm:p-16 text-center shadow-2xl border-4 border-health-white reveal delay-300 group">
+        <div class="absolute inset-0 bg-gradient-to-br from-health-green-pale to-health-green/20 group-hover:scale-105 transition-transform duration-700"></div>
+        <div class="relative z-10">
+          <h2 class="text-4xl sm:text-5xl font-display font-bold text-health-green">Need Support or Information?</h2>
+          <p class="mt-6 text-health-text/80 text-xl font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+            Our medical and pastoral care team is available for free, confidential HIV testing, 
+            counseling, and guidance. No appointment needed — just walk in during clinic hours.
+          </p>
+          <a href="/#location" class="btn-primary inline-flex py-4 px-10 text-lg shadow-lg">
+            Visit Our Center
+            <ArrowRight class="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,204 @@
+---
+/**
+ * EnhancedServicesGrid.astro
+ * Expanded services grid — smooth, organic entrance and hover animations.
+ */
+import { Heart, Activity, Church, Users, ShieldCheck, Stethoscope } from "@lucide/astro";
+
+interface ServiceCard {
+  title: string;
+  description: string;
+  icon: any;
+  color: "health-red" | "health-green";
+  since: string;
+}
+
+const services: ServiceCard[] = [
+  {
+    title: "Confidential HIV Testing",
+    description: "Rapid, safe, and completely free testing conducted with the highest standards of privacy and clinical accuracy by professional medical staff.",
+    icon: Activity,
+    color: "health-red",
+    since: "2019",
+  },
+  {
+    title: "Pastoral Care & Counseling",
+    description: "Faith-based emotional and spiritual support tailored to your journey, provided in a welcoming, non-judgmental space by trained pastoral counselors.",
+    icon: Church,
+    color: "health-green",
+    since: "2018",
+  },
+  {
+    title: "Medical Navigation",
+    description: "Professional guidance through healthcare systems, including assistance with treatment access, referrals, and ongoing care coordination with partner institutions.",
+    icon: ShieldCheck,
+    color: "health-green",
+    since: "2018",
+  },
+  {
+    title: "Community Education & Outreach",
+    description: "Barangay-level lay forums, school HIV lectures, workplace awareness sessions, and mobile education programs designed to break down stigma.",
+    icon: Users,
+    color: "health-green",
+    since: "2023",
+  },
+  {
+    title: "Mobile Medical Missions",
+    description: "Medical consultations, medicine distribution, health education, and spiritual care brought directly to underserved communities across Cebu.",
+    icon: Heart,
+    color: "health-red",
+    since: "2025",
+  },
+  {
+    title: "Partnership Events",
+    description: "Collaborations with Cebu City Health, MHRP, LoveYourself, Cebu Caritas, and ASOG Ateneo to expand HIV prevention, research, and care networks.",
+    icon: Stethoscope,
+    color: "health-green",
+    since: "2023",
+  },
+];
+---
+
+<section id="enhanced-services" class="relative z-10 bg-health-white py-24 sm:py-32 overflow-hidden">
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-health-green-pale/40 blur-[100px] mix-blend-multiply opacity-50 -translate-y-1/2 translate-x-1/4"></div>
+    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] mix-blend-multiply opacity-50 translate-y-1/4 -translate-x-1/4"></div>
+  </div>
+
+  <div class="mx-auto max-w-content px-6 relative z-10">
+    <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+      <div class="inline-flex items-center gap-2 rounded-full bg-health-red/10 border border-health-red/20 px-5 py-2 text-sm font-bold tracking-wide uppercase text-health-red shadow-sm mb-8">
+        <Heart class="h-4 w-4" />
+        What We Offer
+      </div>
+      <h2 class="font-display text-5xl sm:text-6xl font-bold tracking-tight text-health-text">
+        Our Full Range of Services
+      </h2>
+      <p class="mt-8 text-xl leading-relaxed text-health-text/70 font-medium">
+        From free rapid testing to community outreach, each service is rooted in compassion, dignity, and professional care.
+      </p>
+    </div>
+
+    <div id="sgrid-trigger" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+      {
+        services.map((service, index) => {
+          const Icon = service.icon;
+          const isRed = service.color === "health-red";
+          
+          return (
+            <div class="srv-card glass-card p-8 sm:p-10 flex flex-col items-center text-center border border-health-border/40 group" data-idx={index}>
+              <div class="srv-icon-wrap h-16 w-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm transition-all duration-500 ${isRed ? 'bg-health-red text-white' : 'bg-health-green-pale text-health-green group-hover:bg-health-green group-hover:text-white'}">
+                <Icon class="h-8 w-8" />
+              </div>
+              <h3 class="text-2xl font-display font-bold mb-2 ${isRed ? 'text-health-red' : 'text-health-green'}">
+                {service.title}
+              </h3>
+              <span class="inline-block px-3 py-1 rounded-full bg-health-green-pale/60 text-xs font-bold uppercase tracking-wider text-health-green mb-4">
+                Since {service.since}
+              </span>
+              <p class="text-health-text/70 leading-relaxed font-medium text-base">
+                {service.description}
+              </p>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    <div class="mt-16 text-center reveal delay-500">
+      <a href="/#location" class="btn-primary py-3.5 px-10 text-base shadow-lg">
+        Visit Our Center
+      </a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* === SMOOTH CARD ENTRANCE === */
+  .srv-card {
+    opacity: 0 !important;
+    transform: translateY(30px) scale(0.97) !important;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s ease !important;
+    will-change: transform, opacity;
+  }
+
+  .srv-card.srv-visible {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  /* === SMOOTH 3D HOVER === */
+  .srv-card {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .srv-card:nth-child(odd):hover {
+    transform: perspective(800px) rotateY(-2deg) translateY(-4px) !important;
+    box-shadow: 0 24px 64px rgba(44, 94, 72, 0.10), 0 8px 20px rgba(44, 94, 72, 0.04) !important;
+  }
+
+  .srv-card:nth-child(even):hover {
+    transform: perspective(800px) rotateY(2deg) translateY(-4px) !important;
+    box-shadow: 0 24px 64px rgba(44, 94, 72, 0.10), 0 8px 20px rgba(44, 94, 72, 0.04) !important;
+  }
+
+  .srv-card:hover .srv-icon-wrap {
+    transform: scale(1.12) !important;
+  }
+
+  .srv-icon-wrap {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .srv-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .srv-card:hover {
+      transform: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    function initSrvAnim() {
+      var grid = document.getElementById('sgrid-trigger');
+      if (!grid) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var cards = grid.querySelectorAll('.srv-card');
+        for (var i = 0; i < cards.length; i++) cards[i].classList.add('srv-visible');
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var cards = grid.querySelectorAll('.srv-card');
+            for (var i = 0; i < cards.length; i++) {
+              (function(idx) {
+                setTimeout(function() {
+                  cards[idx].classList.add('srv-visible');
+                }, idx * 80); // tight stagger = fluid wave
+              })(i);
+            }
+            observer.unobserve(grid);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+      observer.observe(grid);
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSrvAnim);
+    else initSrvAnim();
+    document.addEventListener('astro:after-swap', initSrvAnim);
+  })();
+</script>
