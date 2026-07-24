@@ -12,6 +12,7 @@ import {
   Briefcase,
   GraduationCap,
 } from "@lucide/astro";
+import { Image } from "astro:assets";
 import type { LeaderProfile } from "../data/landingData";
 
 interface Props {
@@ -21,8 +22,40 @@ interface Props {
 
 const { profile, isReversed = false } = Astro.props;
 
+// Dynamically import profile images located in src/assets/images/profiles/
+const profileImages = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/images/profiles/*.{jpg,jpeg,png,webp}",
+  { eager: true },
+);
+
+// Helper function to decode and normalize file names/paths
+const normalizeName = (str: string) => {
+  try {
+    return decodeURIComponent(str).toLowerCase().split("/").pop()?.trim() || "";
+  } catch {
+    return str.toLowerCase().split("/").pop()?.trim() || "";
+  }
+};
+
+// Target image filename from profile data
+const targetFilename = profile.imagePath
+  ? normalizeName(profile.imagePath)
+  : normalizeName(profile.name);
+
+// Find matching module in glob results
+const matchedKey = Object.keys(profileImages).find((key) => {
+  const globFilename = normalizeName(key);
+  // Match exact filename or match if image name contains profile leader's name
+  return (
+    globFilename === targetFilename ||
+    globFilename.includes(normalizeName(profile.name))
+  );
+});
+
+const profileImage = matchedKey ? profileImages[matchedKey].default : null;
+
 const isMedical = profile.credentials?.some(
-  (c) => c.toLowerCase().includes("md") || c.toLowerCase().includes("doctor")
+  (c) => c.toLowerCase().includes("md") || c.toLowerCase().includes("doctor"),
 );
 const isClergy =
   profile.title?.toLowerCase().includes("rev") ||
@@ -32,14 +65,16 @@ const isClergy =
 <div class="w-full py-2 group">
   <div class="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 w-full">
     <!-- Image / Avatar Container -->
-    <div class={`lg:col-span-4 flex ${isReversed ? 'lg:order-last' : 'lg:order-first'}`}>
+    <div
+      class={`lg:col-span-4 flex ${isReversed ? "lg:order-last" : "lg:order-first"}`}
+    >
       <div
         class="relative w-full overflow-hidden rounded-[2.5rem] bg-health-white p-2 shadow-soft border border-health-border/30 flex items-center justify-center min-h-[350px] transition-all duration-500 group-hover:shadow-card group-hover:border-health-green/20"
       >
         {
-          profile.imagePath ? (
-            <img
-              src={`/${profile.imagePath.replace(/^\//, "")}`}
+          profileImage ? (
+            <Image
+              src={profileImage}
               alt={`Photo of ${profile.name}`}
               class="h-full w-full rounded-[2rem] object-cover min-h-[330px] transition-transform duration-700 ease-out group-hover:scale-105"
               loading="lazy"
@@ -64,7 +99,9 @@ const isClergy =
     </div>
 
     <!-- Profile Details & Mini-Badge Grid -->
-    <div class={`lg:col-span-8 flex ${isReversed ? 'lg:order-first' : 'lg:order-last'}`}>
+    <div
+      class={`lg:col-span-8 flex ${isReversed ? "lg:order-first" : "lg:order-last"}`}
+    >
       <div
         class="flex w-full flex-col justify-between glass-card p-8 sm:p-12 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl border-health-border/50"
       >
@@ -113,9 +150,7 @@ const isClergy =
               >
                 Role
               </p>
-              <p
-                class="text-sm font-bold text-health-text line-clamp-1"
-              >
+              <p class="text-sm font-bold text-health-text line-clamp-1">
                 {profile.title}
               </p>
             </div>

@@ -4,23 +4,43 @@
  * Matches the official PhilCHAN Cebu Organizational Chart hierarchy and pill node layout, with modern polished styling.
  */
 import { User, ArrowDown } from "@lucide/astro";
+import { Image } from "astro:assets";
 
 interface OrgNode {
   name: string;
   title: string;
-  imagePath?: string;
+  imageFileName?: string;
 }
+
+// 1. Import all images dynamically using Vite's glob import
+const profileImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/profiles/Org Chart/*.{jpg,jpeg,png,webp}",
+  { eager: true },
+);
+
+// 2. Helper to fetch the image by exact/partial filename match
+const getProfileImage = (fileName?: string) => {
+  if (!fileName) return null;
+
+  const match = Object.entries(profileImages).find(([path]) =>
+    path.toLowerCase().endsWith(fileName.toLowerCase()),
+  );
+
+  return match ? match[1].default : null;
+};
 
 // 1. Top Tier: President
 const president: OrgNode = {
   name: "Rev. Fr. Rodolfo V. Cancino MI",
   title: "PRESIDENT, PhilCHAN",
+  imageFileName: "Rev. Fr. Rodolfo V. Cancino Jr., MI.jpg",
 };
 
 // 2. Second Tier: Coordinator / Head
 const coordinator: OrgNode = {
   name: "Greta U. Canoy, FPOG, MD",
   title: "Coordinator, PhilCHAN Cebu / Head, PhilCHAN Community Center",
+  imageFileName: "Greta U. Canoy.jpg", // or "Greta U. Canoy, MD, FPOGS.jpg"
 };
 
 // 3. Admin & Finance Branch (Left)
@@ -28,10 +48,12 @@ const adminBranch: OrgNode[] = [
   {
     name: "Ron Revin B. Miranda, RN, USRN, MSN",
     title: "COMMUNITY CENTER ADMINISTRATIVE AND FINANCE OFFICER",
+    imageFileName: "Ron Miranda.jpg",
   },
   {
     name: "Nelle B. Prado",
     title: "COMMUNITY MOBILIZING OFFICER",
+    imageFileName: "Nelle Prado.jpg",
   },
 ];
 
@@ -40,23 +62,53 @@ const boardBranch: OrgNode[] = [
   {
     name: "Carmela Matheu",
     title: "Corporate Secretary, PhilCHAN",
+    imageFileName: "Carmela Matheu.jpg",
   },
   {
     name: "Violeta Hoyohoy",
     title: "Board Member, PhilCHAN",
+    imageFileName: "Violeta Hoyohoy.jpg",
   },
 ];
 
 // 5. Members Grid (Right - 2 columns x 4 rows)
 const members: OrgNode[] = [
-  { name: "Brenette L. Abrenica", title: "MEMBER" },
-  { name: "Ma. Ligaya Suico", title: "MEMBER" },
-  { name: "Maria Taping", title: "MEMBER" },
-  { name: "Ma. Elena B. Yumang", title: "MEMBER" },
-  { name: "Norieza Marte", title: "MEMBER" },
-  { name: "Joydeleen M. Revilla, RGC", title: "MEMBER" },
-  { name: "Joyce Cabije, DOH -7", title: "MEMBER" },
-  { name: "Arnie Montes, DOH - 7", title: "MEMBER" },
+  {
+    name: "Brenette L. Abrenica",
+    title: "MEMBER",
+    imageFileName: "Arnie Montes.jpg",
+  }, // Add filename if available
+  {
+    name: "Ma. Ligaya Suico",
+    title: "MEMBER",
+    imageFileName: "Ma. Ligaya Suico.jpg",
+  },
+  { name: "Maria Taping", title: "MEMBER", imageFileName: "Marie Taping.jpg" },
+  {
+    name: "Ma. Elena B. Yumang",
+    title: "MEMBER",
+    imageFileName: "Elena Yumang.jpg",
+  },
+  {
+    name: "Norieza Marte",
+    title: "MEMBER",
+    imageFileName: "Norieza Marte.jpg",
+  },
+  {
+    name: "Joydeleen M. Revilla, RGC",
+    title: "MEMBER",
+    imageFileName: "Joydeleen Revilla.jpg",
+  },
+  {
+    name: "Joyce Cabije, DOH -7",
+    title: "MEMBER",
+    imageFileName: "Joyce Cabije.jpg",
+  },
+  {
+    name: "Arnie Montes, DOH - 7",
+    title: "MEMBER",
+    imageFileName: "Arnie Montes.jpg",
+  },
 ];
 ---
 
@@ -72,9 +124,7 @@ const members: OrgNode[] = [
       >
         Organizational Chart
       </h2>
-      <p
-        class="mt-4 text-xl font-medium text-health-text/70"
-      >
+      <p class="mt-4 text-xl font-medium text-health-text/70">
         PHILIPPINE CATHOLIC HIV/AIDS NETWORK INC. &mdash; Cebu City Chapter
       </p>
     </div>
@@ -90,9 +140,9 @@ const members: OrgNode[] = [
             class="h-16 w-16 shrink-0 overflow-hidden rounded-3xl bg-health-green-pale flex items-center justify-center"
           >
             {
-              president.imagePath ? (
-                <img
-                  src={`/${president.imagePath}`}
+              getProfileImage(president.imageFileName) ? (
+                <Image
+                  src={getProfileImage(president.imageFileName)!}
                   alt={president.name}
                   class="h-full w-full object-cover"
                 />
@@ -130,9 +180,9 @@ const members: OrgNode[] = [
             class="h-16 w-16 shrink-0 overflow-hidden rounded-3xl bg-health-green-pale flex items-center justify-center"
           >
             {
-              coordinator.imagePath ? (
-                <img
-                  src={`/${coordinator.imagePath}`}
+              getProfileImage(coordinator.imageFileName) ? (
+                <Image
+                  src={getProfileImage(coordinator.imageFileName)!}
                   alt={coordinator.name}
                   class="h-full w-full object-cover"
                 />
@@ -171,77 +221,116 @@ const members: OrgNode[] = [
         class="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-12 w-full max-w-6xl items-start"
       >
         <!-- BRANCH 1: Admin & Mobilizing Officers (Left Column) -->
-        <div class="lg:col-span-4 flex flex-col items-center gap-6 reveal-left delay-500">
+        <div
+          class="lg:col-span-4 flex flex-col items-center gap-6 reveal-left delay-500"
+        >
           {
-            adminBranch.map((node, index) => (
-              <>
-                <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
-                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
-                    <User class="h-6 w-6 text-health-green" />
+            adminBranch.map((node, index) => {
+              const img = getProfileImage(node.imageFileName);
+              return (
+                <>
+                  <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                      {img ? (
+                        <Image
+                          src={img}
+                          alt={node.name}
+                          class="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <User class="h-6 w-6 text-health-green" />
+                      )}
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-health-text">
+                        {node.name}
+                      </h4>
+                      <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
+                        {node.title}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 class="text-sm font-bold text-health-text">
-                      {node.name}
-                    </h4>
-                    <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
-                      {node.title}
-                    </p>
-                  </div>
-                </div>
 
-                {index < adminBranch.length - 1 && (
-                  <ArrowDown class="h-5 w-5 text-health-border -my-2" />
-                )}
-              </>
-            ))
+                  {index < adminBranch.length - 1 && (
+                    <ArrowDown class="h-5 w-5 text-health-border -my-2" />
+                  )}
+                </>
+              );
+            })
           }
         </div>
 
         <!-- BRANCH 2: Corporate Secretary & Board (Middle Column) -->
-        <div class="lg:col-span-3 flex flex-col items-center gap-6 reveal delay-500">
+        <div
+          class="lg:col-span-3 flex flex-col items-center gap-6 reveal delay-500"
+        >
           {
-            boardBranch.map((node, index) => (
-              <>
-                <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
-                  <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
-                    <User class="h-6 w-6 text-health-green" />
+            boardBranch.map((node, index) => {
+              const img = getProfileImage(node.imageFileName);
+              return (
+                <>
+                  <div class="flex w-full items-center gap-4 rounded-[2rem] bg-health-white p-2.5 pr-6 border border-health-border shadow-soft hover:shadow-md transition-shadow">
+                    <div class="h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                      {img ? (
+                        <Image
+                          src={img}
+                          alt={node.name}
+                          class="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <User class="h-6 w-6 text-health-green" />
+                      )}
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-health-text">
+                        {node.name}
+                      </h4>
+                      <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
+                        {node.title}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 class="text-sm font-bold text-health-text">
-                      {node.name}
-                    </h4>
-                    <p class="text-[10px] font-bold text-health-green leading-tight uppercase mt-1 tracking-wider">
-                      {node.title}
-                    </p>
-                  </div>
-                </div>
 
-                {index < boardBranch.length - 1 && (
-                  <ArrowDown class="h-5 w-5 text-health-border -my-2" />
-                )}
-              </>
-            ))
+                  {index < boardBranch.length - 1 && (
+                    <ArrowDown class="h-5 w-5 text-health-border -my-2" />
+                  )}
+                </>
+              );
+            })
           }
         </div>
 
         <!-- BRANCH 3: Members Grid (Right 2-Column Grid) -->
         <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
-            members.map((member, index) => (
-              <div class={`flex items-center gap-3 rounded-[2rem] bg-health-white p-2 pr-4 border border-health-border shadow-sm hover:shadow-md transition-shadow reveal-right delay-${(index % 4 + 2) * 100}`}>
-                <div class="h-10 w-10 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
-                  <User class="h-5 w-5 text-health-green" />
+            members.map((member, index) => {
+              const img = getProfileImage(member.imageFileName);
+              return (
+                <div
+                  class={`flex items-center gap-3 rounded-[2rem] bg-health-white p-2 pr-4 border border-health-border shadow-sm hover:shadow-md transition-shadow reveal-right delay-${((index % 4) + 2) * 100}`}
+                >
+                  <div class="h-10 w-10 shrink-0 overflow-hidden rounded-2xl bg-health-green-pale flex items-center justify-center">
+                    {img ? (
+                      <Image
+                        src={img}
+                        alt={member.name}
+                        class="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <User class="h-5 w-5 text-health-green" />
+                    )}
+                  </div>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-bold text-health-text truncate">
+                      {member.name}
+                    </h4>
+                    <p class="text-[10px] font-bold text-health-green uppercase tracking-wider mt-0.5">
+                      {member.title}
+                    </p>
+                  </div>
                 </div>
-                <div class="min-w-0">
-                  <h4 class="text-sm font-bold text-health-text truncate">
-                    {member.name}
-                  </h4>
-                  <p class="text-[10px] font-bold text-health-green uppercase tracking-wider mt-0.5">
-                    {member.title}
-                  </p>
-                </div>
-              </div>
-            ))
+              );
+            })
           }
         </div>
       </div>

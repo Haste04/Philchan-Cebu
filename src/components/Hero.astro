@@ -1,17 +1,47 @@
 ---
-import { Heart, ArrowRight, ShieldCheck, PhoneCall, Sparkles } from "@lucide/astro";
+import {
+  Heart,
+  ArrowRight,
+  ShieldCheck,
+  PhoneCall,
+  Sparkles,
+} from "@lucide/astro";
+import { Image } from "astro:assets";
+
+// Dynamically import all images in the Hero Pics folder
+const heroImageFiles = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/images/Hero Pics/Hero Pic *.jpg",
+  { eager: true },
+);
+
+// Sort them numerically (1 to 10) based on file name
+const heroImages = Object.entries(heroImageFiles)
+  .sort(([pathA], [pathB]) => {
+    const numA = parseInt(pathA.match(/\d+/)?.[0] || "0", 10);
+    const numB = parseInt(pathB.match(/\d+/)?.[0] || "0", 10);
+    return numA - numB;
+  })
+  .map(([_, module]) => module.default);
 ---
 
-<section id="hero" class="relative overflow-hidden bg-health-white pt-32 pb-20 lg:pt-40 lg:pb-32">
+<section
+  id="hero"
+  class="relative overflow-hidden bg-health-white pt-32 pb-20 lg:pt-40 lg:pb-32"
+>
   {/* Abstract Soft Gradient Background */}
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-70 mix-blend-multiply"></div>
-    <div class="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] opacity-70 mix-blend-multiply"></div>
+    <div
+      class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-70 mix-blend-multiply"
+    >
+    </div>
+    <div
+      class="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] opacity-70 mix-blend-multiply"
+    >
+    </div>
   </div>
 
   <div class="mx-auto max-w-content px-6 relative z-10">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-      
       {/* Text Content */}
       <div class="lg:col-span-6 lg:pr-8 xl:pr-12 reveal-left">
         <div
@@ -24,20 +54,30 @@ import { Heart, ArrowRight, ShieldCheck, PhoneCall, Sparkles } from "@lucide/ast
         <h1
           class="font-display text-5xl font-bold tracking-tight text-health-text sm:text-6xl lg:text-7xl leading-[1.1]"
         >
-          Compassionate care, <span class="text-health-red block mt-2">rooted in faith.</span>
+          Compassionate care, <span class="text-health-red block mt-2"
+            >rooted in faith.</span
+          >
         </h1>
 
         <p class="mt-8 text-xl leading-relaxed text-health-text/70 max-w-lg">
-          PhilCHAN Cebu provides free, confidential HIV testing, pastoral support, 
-          and medical care in a dignified and welcoming environment.
+          PhilCHAN Cebu provides free, confidential HIV testing, pastoral
+          support, and medical care in a dignified and welcoming environment.
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row gap-4 items-center">
-          <a href="#location" class="btn-primary w-full sm:w-auto text-lg py-4 px-8">
+          <a
+            href="#location"
+            class="btn-primary w-full sm:w-auto text-lg py-4 px-8"
+          >
             Find Testing Center
-            <ArrowRight class="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" />
+            <ArrowRight
+              class="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1"
+            />
           </a>
-          <a href="tel:+639669109662" class="btn-secondary w-full sm:w-auto text-lg py-4 px-8 bg-transparent">
+          <a
+            href="tel:+639669109662"
+            class="btn-secondary w-full sm:w-auto text-lg py-4 px-8 bg-transparent"
+          >
             <PhoneCall class="h-5 w-5 mr-1" />
             Call Hotline
           </a>
@@ -47,13 +87,17 @@ import { Heart, ArrowRight, ShieldCheck, PhoneCall, Sparkles } from "@lucide/ast
           class="mt-12 flex flex-wrap items-center gap-8 text-sm font-semibold text-health-text/60"
         >
           <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-health-green-pale">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-health-green-pale"
+            >
               <ShieldCheck class="h-5 w-5 text-health-green" />
             </div>
             100% Confidential
           </div>
           <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-health-red/10">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-health-red/10"
+            >
               <Heart class="h-5 w-5 text-health-red" />
             </div>
             Free Testing
@@ -61,40 +105,68 @@ import { Heart, ArrowRight, ShieldCheck, PhoneCall, Sparkles } from "@lucide/ast
         </div>
       </div>
 
-      {/* Photo-Heavy Image Section */}
+      {/* Rotating Hero Image Container */}
       <div class="lg:col-span-6 relative reveal-right delay-200">
-        <div class="relative w-full h-[550px] lg:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-health-white">
-          <img 
-            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000&auto=format&fit=crop" 
-            alt="Smiling doctor in a bright, modern clinic" 
-            class="w-full h-full object-cover object-center scale-105 hover:scale-100 transition-transform duration-1000 ease-out"
-          />
-        </div>
-        
-        {/* Floating Trust Card with breathing animation */}
-        <div class="absolute -bottom-8 -left-8 sm:-left-12 sm:w-80 glass-card p-6 border border-white/50 animate-[float_6s_ease-in-out_infinite]">
-          <div class="flex items-start gap-4">
-            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-health-green text-white shadow-md">
-              <ShieldCheck class="h-7 w-7" />
-            </div>
-            <div>
-              <h3 class="font-display font-bold text-health-text text-xl">Safe & Trusted</h3>
-              <p class="mt-1.5 text-sm text-health-text/70 leading-relaxed font-medium">Professional medical team ready to support you with dignity.</p>
-            </div>
-          </div>
+        <div
+          id="hero-slideshow"
+          class="relative w-full h-[550px] lg:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-health-white bg-slate-100"
+        >
+          {
+            heroImages.map((img, index) => (
+              <Image
+                src={img}
+                alt={`PhilCHAN Cebu Community Scene ${index + 1}`}
+                class={`hero-slide absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
+                  index === 0 ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            ))
+          }
         </div>
       </div>
     </div>
   </div>
-  
+
   <div class="absolute bottom-0 left-0 right-0">
     <div class="divider-ribbon"></div>
   </div>
 
   <style>
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
     }
   </style>
+
+  <script>
+    function setupSlideshow() {
+      const slides = document.querySelectorAll<HTMLElement>(".hero-slide");
+      if (slides.length <= 1) return;
+
+      let currentIndex = 0;
+
+      setInterval(() => {
+        // Fade out current slide
+        slides[currentIndex].classList.remove("opacity-100", "z-10");
+        slides[currentIndex].classList.add("opacity-0", "z-0");
+
+        // Advance index
+        currentIndex = (currentIndex + 1) % slides.length;
+
+        // Fade in next slide
+        slides[currentIndex].classList.remove("opacity-0", "z-0");
+        slides[currentIndex].classList.add("opacity-100", "z-10");
+      }, 15000); // 15 seconds
+    }
+
+    // Initialize on page load and support Astro View Transitions
+    setupSlideshow();
+    document.addEventListener("astro:after-swap", setupSlideshow);
+  </script>
 </section>

@@ -14,11 +14,19 @@ const year = new Date().getFullYear();
 >
   {/* Abstract Soft Gradient Background for Footer */}
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-1/2 left-1/4 w-96 h-96 rounded-full bg-health-green-light/20 blur-[80px] opacity-70"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-health-red/10 blur-[80px] opacity-50"></div>
+    <div
+      class="absolute -top-1/2 left-1/4 w-96 h-96 rounded-full bg-health-green-light/20 blur-[80px] opacity-70"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-health-red/10 blur-[80px] opacity-50"
+    >
+    </div>
   </div>
 
-  <div class="mx-auto max-w-content px-6 grid gap-16 py-20 sm:grid-cols-3 lg:grid-cols-4 relative z-10 reveal">
+  <div
+    class="mx-auto max-w-content px-6 grid gap-16 py-20 sm:grid-cols-3 lg:grid-cols-4 relative z-10 reveal"
+  >
     <!-- Branding & Mission -->
     <div class="lg:col-span-2">
       <div class="flex items-center gap-3">
@@ -31,9 +39,11 @@ const year = new Date().getFullYear();
           PhilCHAN Cebu
         </p>
       </div>
-      <p class="mt-6 text-lg text-health-white/80 max-w-md leading-relaxed font-medium">
-        Philippine Catholic HIV/AIDS Network Inc. - Cebu Chapter. 
-        Providing free, dignified, and confidential health services to our community.
+      <p
+        class="mt-6 text-lg text-health-white/80 max-w-md leading-relaxed font-medium"
+      >
+        Philippine Catholic HIV/AIDS Network Inc. - Cebu Chapter. Providing
+        free, dignified, and confidential health services to our community.
       </p>
     </div>
 
@@ -69,10 +79,14 @@ const year = new Date().getFullYear();
       </p>
       <ul class="space-y-5 text-base font-medium text-health-white/80">
         <li class="flex items-start gap-4 group">
-          <div class="mt-0.5 p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors">
+          <div
+            class="mt-0.5 p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors"
+          >
             <MapPin class="h-4 w-4" />
           </div>
-          <span class="leading-relaxed group-hover:text-white transition-colors">{testingCenter.addressLines.join(", ")}</span>
+          <span class="leading-relaxed group-hover:text-white transition-colors"
+            >{testingCenter.addressLines.join(", ")}</span
+          >
         </li>
         {
           testingCenter.contactNumbers.map((c) => (
@@ -80,24 +94,46 @@ const year = new Date().getFullYear();
               <div class="p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors">
                 <Phone class="h-4 w-4" />
               </div>
-              <a
-                href={c.href}
-                class="group-hover:text-white transition-colors"
-              >
+              <a href={c.href} class="group-hover:text-white transition-colors">
                 {c.number}
               </a>
             </li>
           ))
         }
-          <li class="flex items-center gap-4 group">
-            <div class="p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors">
-              <Mail class="h-4 w-4" />
-            </div>
-            <a
-              href={`mailto:${testingCenter.email}`}
-              class="group-hover:text-white transition-colors"
+        <li class="flex items-center gap-4 group">
+          <div
+            class="p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors"
+          >
+            <Mail class="h-4 w-4" />
+          </div>
+          <a
+            href={`mailto:${testingCenter.email}`}
+            class="group-hover:text-white transition-colors"
+          >
+            philchan2013.cebu@gmail.com
+          </a>
+        </li>
+        <li class="flex items-center gap-4 group">
+          <div
+            class="p-1.5 rounded-lg bg-health-white/5 text-health-white/60 group-hover:bg-health-white/20 group-hover:text-white transition-colors"
+          >
+            <svg
+              class="h-4 w-4 fill-current"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
             >
-            Email Us
+              <path
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+              ></path>
+            </svg>
+          </div>
+          <a
+            href="https://www.facebook.com/PhilCHANCebu"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group-hover:text-white transition-colors"
+          >
+            PhilCHAN Cebu
           </a>
         </li>
       </ul>

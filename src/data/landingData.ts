@@ -17,7 +17,7 @@ export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Services & History", href: "/services" },
-  { label: "Prevention & Tips", href: "/prevention" }
+  { label: "Prevention & Tips", href: "/prevention" },
 ];
 
 // ---------------------------------------------------------------------
@@ -115,7 +115,7 @@ export const testingCenter: TestingCenterInfo = {
   name: "PhilCHAN Community Center",
   addressLines: ["Mt. Zion Center, Tigbao", "Talamban, Cebu City, Philippines"],
   hours: [
-    { day: "Monday – Friday", time: "9:00 AM – 5:00 PM" },
+    { day: "Monday – Friday", time: "8:00 AM – 5:00 PM" },
     { day: "Saturday & Sunday", time: "Closed" },
   ],
   contactNumbers: [
@@ -125,7 +125,7 @@ export const testingCenter: TestingCenterInfo = {
       href: "tel:+639669109662",
     },
   ],
-  email: "philchancebu@gmail.com", // Update with official email if different
+  email: "philchan2013.cebu@gmail.com", // Update with official email if different
   mapEmbedSrc:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15699.28255554747!2d123.905!3d10.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDIxJzM2LjAiTiAxMjPCsDU0JzE4LjAiRQ!5e0!3m2!1sen!2sph!4v1700000000000",
   mapDirectionsUrl:
@@ -150,27 +150,32 @@ export interface PreventionTip {
 export const preventionTips: PreventionTip[] = [
   {
     title: "Get Tested Regularly",
-    description: "Knowing your status is the most important step. If you are sexually active, routine HIV testing helps you stay healthy and protects your partners. Testing at our center is completely free and confidential.",
-    icon: "Stethoscope"
+    description:
+      "Knowing your status is the most important step. If you are sexually active, routine HIV testing helps you stay healthy and protects your partners. Testing at our center is completely free and confidential.",
+    icon: "Stethoscope",
   },
   {
     title: "Use Condoms Effectively",
-    description: "Consistent and correct use of condoms during sex provides a highly effective barrier against HIV and other sexually transmitted infections.",
-    icon: "Shield"
+    description:
+      "Consistent and correct use of condoms during sex provides a highly effective barrier against HIV and other sexually transmitted infections.",
+    icon: "Shield",
   },
   {
     title: "Consider PrEP",
-    description: "Pre-Exposure Prophylaxis (PrEP) is a daily medicine that can significantly reduce your chance of getting HIV. Ask our counselors if PrEP is right for you.",
-    icon: "Pill"
+    description:
+      "Pre-Exposure Prophylaxis (PrEP) is a daily medicine that can significantly reduce your chance of getting HIV. Ask our counselors if PrEP is right for you.",
+    icon: "Pill",
   },
   {
     title: "Limit Your Number of Sexual Partners",
-    description: "Having fewer sexual partners decreases your chances of having a partner who is infected with HIV or whose HIV is not virally suppressed.",
-    icon: "Users"
+    description:
+      "Having fewer sexual partners decreases your chances of having a partner who is infected with HIV or whose HIV is not virally suppressed.",
+    icon: "Users",
   },
   {
     title: "Never Share Needles",
-    description: "If you inject drugs, never share your needles, syringes, or other equipment. HIV can live in a used needle up to 42 days depending on temperature and other factors.",
-    icon: "Activity"
-  }
+    description:
+      "If you inject drugs, never share your needles, syringes, or other equipment. HIV can live in a used needle up to 42 days depending on temperature and other factors.",
+    icon: "Activity",
+  },
 ];
