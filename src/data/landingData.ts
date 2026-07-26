@@ -128,9 +128,9 @@ export const testingCenter: TestingCenterInfo = {
   ],
   email: "philchan2013.cebu@gmail.com", // Update with official email if different
   mapEmbedSrc:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15699.28255554747!2d123.905!3d10.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDIxJzM2LjAiTiAxMjPCsDU0JzE4LjAiRQ!5e0!3m2!1sen!2sph!4v1700000000000",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.074351234057!2d123.9174893!3d10.3730374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9a2778bcaa3ab%3A0x47b8a41d6c4b6e4e!2sMt.%20Zion%20Maternity%20Home!5e0!3m2!1sen!2sph!4v1722010000000!5m2!1sen!2sph",
   mapDirectionsUrl:
-    "https://maps.google.com/?q=Mt.+Zion+Center+Tigbao+Talamban+Cebu+City",
+    "https://www.google.com/maps/place/Mt.+Zion+Maternity+Home/@10.3730374,123.9174893,17z",
   highlights: [
     "FREE & Confidential HIV Testing",
     "Faith-based, compassionate, and non-judgmental environment",
