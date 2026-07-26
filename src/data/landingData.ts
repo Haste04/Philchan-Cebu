@@ -130,7 +130,7 @@ export const testingCenter: TestingCenterInfo = {
   mapEmbedSrc:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.074351234057!2d123.9174893!3d10.3730374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9a2778bcaa3ab%3A0x47b8a41d6c4b6e4e!2sMt.%20Zion%20Maternity%20Home!5e0!3m2!1sen!2sph!4v1722010000000!5m2!1sen!2sph",
   mapDirectionsUrl:
-    "https://www.google.com/maps/place/Mt.+Zion+Maternity+Home/@10.3730374,123.9174893,17z",
+    "https://www.google.com/maps/place/Mt.+Zion+Maternity+Home/@10.3730374,123.9174893,17z/data=!4m6!3m5!1s0x33a9a2778bcaa3ab:0x47b8a41d6c4b6e4e!8m2!3d10.3735598!4d123.9183691!16s%2Fg%2F11bzvwd_j3?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D",
   highlights: [
     "FREE & Confidential HIV Testing",
     "Faith-based, compassionate, and non-judgmental environment",
