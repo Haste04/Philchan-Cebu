@@ -34,15 +34,16 @@ const categories: ServiceCategory[] = [
       "Syphilis Screening",
       "HBsAg Screening (Hepatitis B)",
       "Anti-HCV Screening (Hepatitis C)",
-      "CD4 Count and Viral Load Testing",
       "Minor Surgeries",
       "Medical and Surgical Checkup",
       "Free Medicines",
       "Vaccinations",
     ],
     subtexts: {
-      "HIV Testing Services": "Community-Based Screening, Facility-Based Screening",
-      "Free Medicines": "ARV, Pre-Exposure Prophylaxis, Prescription Drugs, Food Supplements",
+      "HIV Testing Services":
+        "Community-Based Screening, Facility-Based Screening",
+      "Free Medicines":
+        "ARV, Pre-Exposure Prophylaxis, Prescription Drugs, Food Supplements",
     },
   },
   {
@@ -61,29 +62,43 @@ const categories: ServiceCategory[] = [
       "Burial Assistance and Services",
     ],
     subtexts: {
-      "Counseling": "Family Disclosure, Treatment Adherence, and Others",
+      Counseling: "Family Disclosure, Treatment Adherence, and Others",
     },
   },
 ];
 ---
 
-<section id="enhanced-services" class="relative z-10 bg-health-white py-24 sm:py-32 overflow-hidden">
+<section
+  id="enhanced-services"
+  class="relative z-10 bg-health-white py-24 sm:py-32 overflow-hidden"
+>
   <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-health-green-pale/40 blur-[100px] mix-blend-multiply opacity-50 -translate-y-1/2 translate-x-1/4"></div>
-    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] mix-blend-multiply opacity-50 translate-y-1/4 -translate-x-1/4"></div>
+    <div
+      class="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-health-green-pale/40 blur-[100px] mix-blend-multiply opacity-50 -translate-y-1/2 translate-x-1/4"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[100px] mix-blend-multiply opacity-50 translate-y-1/4 -translate-x-1/4"
+    >
+    </div>
   </div>
 
   <div class="mx-auto max-w-content px-6 relative z-10">
     <div class="text-center max-w-3xl mx-auto mb-20 reveal">
-      <div class="inline-flex items-center gap-2 rounded-full bg-health-red/10 border border-health-red/20 px-5 py-2 text-sm font-bold tracking-wide uppercase text-health-red shadow-sm mb-8">
+      <div
+        class="inline-flex items-center gap-2 rounded-full bg-health-red/10 border border-health-red/20 px-5 py-2 text-sm font-bold tracking-wide uppercase text-health-red shadow-sm mb-8"
+      >
         <Heart class="h-4 w-4" />
         What We Offer
       </div>
-      <h2 class="font-display text-5xl sm:text-6xl font-bold tracking-tight text-health-text">
+      <h2
+        class="font-display text-5xl sm:text-6xl font-bold tracking-tight text-health-text"
+      >
         Our Services
       </h2>
       <p class="mt-8 text-xl leading-relaxed text-health-text/70 font-medium">
-        From free rapid testing to community outreach, each service is rooted in compassion, dignity, and professional care.
+        From free rapid testing to community outreach, each service is rooted in
+        compassion, dignity, and professional care.
       </p>
     </div>
 
@@ -92,21 +107,34 @@ const categories: ServiceCategory[] = [
         categories.map((cat, idx) => {
           const Icon = cat.icon;
           return (
-            <div class="srv-card glass-card p-8 sm:p-10 flex flex-col border border-health-border/40" data-idx={idx}>
+            <div
+              class="srv-card glass-card p-8 sm:p-10 flex flex-col border border-health-border/40"
+              data-idx={idx}
+            >
               <div class="flex items-center gap-3 mb-6">
-                <div class={cat.title.includes("Psycho-Spiritual") ? "srv-icon-wrap h-14 w-20 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-3" : "srv-icon-wrap h-14 w-16 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-2"}>
+                <div
+                  class={
+                    cat.title.includes("Psycho-Spiritual")
+                      ? "srv-icon-wrap h-14 w-20 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-3"
+                      : "srv-icon-wrap h-14 w-16 rounded-xl flex items-center justify-center bg-health-red text-white shadow-sm p-2"
+                  }
+                >
                   <Icon class="h-7 w-7" />
                 </div>
-                <h3 class="text-xl font-display font-bold text-health-red">{cat.title}</h3>
+                <h3 class="text-xl font-display font-bold text-health-red">
+                  {cat.title}
+                </h3>
               </div>
               <ul class="space-y-3 flex-1">
                 {cat.items.map((item) => (
                   <li class="flex items-start gap-3 text-health-text/80 text-sm leading-relaxed">
-                    <span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-health-green shrink-0"></span>
+                    <span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-health-green shrink-0" />
                     <span>
                       <span class="font-semibold text-health-text">{item}</span>
                       {cat.subtexts?.[item] && (
-                        <span class="block text-health-text/50 text-xs mt-0.5">{cat.subtexts[item]}</span>
+                        <span class="block text-health-text/50 text-xs mt-0.5">
+                          {cat.subtexts[item]}
+                        </span>
                       )}
                     </span>
                   </li>
@@ -124,9 +152,10 @@ const categories: ServiceCategory[] = [
   .srv-card {
     opacity: 0 !important;
     transform: translateY(30px) scale(0.97) !important;
-    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s ease !important;
+    transition:
+      opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.4s ease !important;
     will-change: transform, opacity;
   }
 
@@ -136,19 +165,24 @@ const categories: ServiceCategory[] = [
   }
 
   .srv-card {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition:
+      transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
   .srv-card:nth-child(odd):hover {
     transform: perspective(800px) rotateY(-2deg) translateY(-4px) !important;
-    box-shadow: 0 24px 64px rgba(44, 94, 72, 0.10), 0 8px 20px rgba(44, 94, 72, 0.04) !important;
+    box-shadow:
+      0 24px 64px rgba(44, 94, 72, 0.1),
+      0 8px 20px rgba(44, 94, 72, 0.04) !important;
   }
 
   .srv-card:nth-child(even):hover {
     transform: perspective(800px) rotateY(2deg) translateY(-4px) !important;
-    box-shadow: 0 24px 64px rgba(44, 94, 72, 0.10), 0 8px 20px rgba(44, 94, 72, 0.04) !important;
+    box-shadow:
+      0 24px 64px rgba(44, 94, 72, 0.1),
+      0 8px 20px rgba(44, 94, 72, 0.04) !important;
   }
 
   .srv-card:hover .srv-icon-wrap {
@@ -172,37 +206,42 @@ const categories: ServiceCategory[] = [
 </style>
 
 <script is:inline>
-  (function() {
+  (function () {
     function initSrvAnim() {
-      var grid = document.getElementById('enhanced-services');
+      var grid = document.getElementById("enhanced-services");
       if (!grid) return;
-      var cards = grid.querySelectorAll('.srv-card');
+      var cards = grid.querySelectorAll(".srv-card");
 
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        for (var i = 0; i < cards.length; i++) cards[i].classList.add('srv-visible');
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        for (var i = 0; i < cards.length; i++)
+          cards[i].classList.add("srv-visible");
         return;
       }
 
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            for (var i = 0; i < cards.length; i++) {
-              (function(idx) {
-                setTimeout(function() {
-                  cards[idx].classList.add('srv-visible');
-                }, idx * 80);
-              })(i);
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              for (var i = 0; i < cards.length; i++) {
+                (function (idx) {
+                  setTimeout(function () {
+                    cards[idx].classList.add("srv-visible");
+                  }, idx * 80);
+                })(i);
+              }
+              observer.unobserve(entry.target);
             }
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+          });
+        },
+        { root: null, rootMargin: "0px 0px -60px 0px", threshold: 0.1 },
+      );
 
       observer.observe(grid);
     }
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSrvAnim);
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", initSrvAnim);
     else initSrvAnim();
-    document.addEventListener('astro:after-swap', initSrvAnim);
+    document.addEventListener("astro:after-swap", initSrvAnim);
   })();
 </script>

@@ -156,27 +156,33 @@ export const preventionTips: PreventionTip[] = [
     icon: "Stethoscope",
   },
   {
-    title: "Use Condoms Effectively",
+    title: "Abstinence",
     description:
-      "Consistent and correct use of condoms during sex provides a highly effective barrier against HIV and other sexually transmitted infections.",
+      "Refraining from sexual activity is the most effective way to eliminate the risk of acquiring or transmitting HIV and other sexually transmitted infections.",
     icon: "Shield",
   },
   {
-    title: "Consider PrEP",
+    title: "Be Faithful",
     description:
-      "Pre-Exposure Prophylaxis (PrEP) is a daily medicine that can significantly reduce your chance of getting HIV. Ask our counselors if PrEP is right for you.",
-    icon: "Pill",
+      "Maintaining a mutually faithful, long-term relationship with an uninfected partner significantly reduces your risk of exposure to HIV.",
+    icon: "Heart",
   },
   {
-    title: "Limit Your Number of Sexual Partners",
+    title: "Conscience & Correct Choice",
     description:
-      "Having fewer sexual partners decreases your chances of having a partner who is infected with HIV or whose HIV is not virally suppressed.",
-    icon: "Users",
+      "Making informed, responsible decisions based on solid values and moral awareness empowers individuals to safeguard their health and dignity.",
+    icon: "Brain",
   },
   {
-    title: "Never Share Needles",
+    title: "Don't Use Drugs",
     description:
-      "If you inject drugs, never share your needles, syringes, or other equipment. HIV can live in a used needle up to 42 days depending on temperature and other factors.",
+      "Avoiding illicit substance use protects you from high-risk behaviors and eliminates the severe danger of HIV transmission through shared needles or syringes.",
     icon: "Activity",
+  },
+  {
+    title: "Education",
+    description:
+      "Continuous learning and raising awareness about HIV transmission, care, and prevention dispel myths and foster supportive, compassionate communities.",
+    icon: "BookOpen",
   },
 ];

@@ -3,7 +3,19 @@
  * MissionVision.astro
  * Features two modern overlapping cards highlighting the organization's core tenets.
  */
-import { Compass, Eye, Heart } from "@lucide/astro";
+import { Compass, Eye, Heart, CheckCircle2 } from "@lucide/astro";
+
+const missionPoints = [
+  "Coordinate care, formation and accompaniment of people living with HIV and AIDS, health/medical personnel, and pastoral/spiritual workers;",
+  "Facilitate training and development programs on the prevention, monitoring and management of the disease;",
+  "Network with other supporters for continuous growth and sustainability;",
+  "Strengthen capabilities and motivation of the members of the Network;",
+  "Lead by giving a voice to the human rights of PLHIV, eliminating stigma and discrimination, and empowering them to live with the dignity, and;",
+  "Create an environment of open, responsive, and comprehensive exchange of communication and information on the fight against HIV and AIDS.",
+];
+
+const visionText =
+  "To be the dynamic bastion of healing and hope committed to bringing the everlasting love of God to people living with and affected by HIV/AIDS and help create an HIV-free society.";
 ---
 
 <section
@@ -37,18 +49,23 @@ import { Compass, Eye, Heart } from "@lucide/astro";
             >
               <Heart class="h-8 w-8" />
             </div>
-            <h3
-              class="font-display text-4xl font-bold text-health-text"
-            >
+            <h3 class="font-display text-4xl font-bold text-health-text">
               Mission
             </h3>
           </div>
-          <p class="mt-8 text-xl leading-relaxed text-health-text/70 font-medium">
-            To champion the human rights of all people living with HIV/AIDS,
-            ensure comprehensive access to prevention, treatment, care, and
-            support, and to break down the walls of stigma through the
-            teachings and compassion of the Catholic Church.
-          </p>
+
+          <ul class="mt-8 space-y-4">
+            {
+              missionPoints.map((point) => (
+                <li class="flex items-start gap-3.5 text-base sm:text-lg text-health-text/80 font-medium leading-relaxed">
+                  <span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-health-red/10 text-health-red">
+                    <CheckCircle2 class="h-4 w-4" />
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))
+            }
+          </ul>
         </div>
 
         <div
@@ -70,18 +87,21 @@ import { Compass, Eye, Heart } from "@lucide/astro";
             >
               <Eye class="h-8 w-8" />
             </div>
-            <h3
-              class="font-display text-4xl font-bold text-health-text"
-            >
+            <h3 class="font-display text-4xl font-bold text-health-text">
               Vision
             </h3>
           </div>
-          <p class="mt-8 text-xl leading-relaxed text-health-text/70 font-medium">
-            A society fully educated about HIV/AIDS where every individual,
-            regardless of status, lives with dignity, experiences the unconditional
-            love of the community, and has full access to the health resources
-            they need to thrive.
-          </p>
+
+          <div
+            class="mt-8 flex items-start gap-3.5 text-lg sm:text-xl text-health-text/80 font-medium leading-relaxed"
+          >
+            <span
+              class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-health-green/10 text-health-green"
+            >
+              <CheckCircle2 class="h-5 w-5" />
+            </span>
+            <span>{visionText}</span>
+          </div>
         </div>
 
         <div
