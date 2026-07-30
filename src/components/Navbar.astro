@@ -7,8 +7,6 @@ import { Image } from "astro:assets";
 import { navItems } from "../data/landingData";
 import { Menu, X } from "@lucide/astro";
 import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
-import logoImage2 from "../assets/images/logos/CBCP-ECHC Logo.png";
-import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
 ---
 
 <header
@@ -24,24 +22,10 @@ import logoImage3 from "../assets/images/logos/Catholic Bishop's Logo.png";
       href="/"
       class="flex items-center gap-3 font-display text-xl font-bold text-health-green hover:opacity-80 transition-opacity pl-2"
     >
-      <div class="flex items-center gap-1 bg-health-white p-1 rounded-full shadow-sm border border-health-border/30">
+      <div class="flex items-center bg-health-white p-1 rounded-full shadow-sm border border-health-border/30">
         <Image
           src={logoImage}
           alt="PhilCHAN Cebu logo"
-          width={32}
-          height={32}
-          class="rounded-full h-8 w-8 object-cover"
-        />
-        <Image
-          src={logoImage2}
-          alt="CBCP logo"
-          width={32}
-          height={32}
-          class="rounded-full h-8 w-8 object-cover"
-        />
-        <Image
-          src={logoImage3}
-          alt="Catholic Bishop's logo"
           width={32}
           height={32}
           class="rounded-full h-8 w-8 object-cover"

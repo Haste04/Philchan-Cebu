@@ -1,13 +1,16 @@
 export interface GalleryPlace {
   location: string;
+  title: string;
   description: string;
   date?: string;
   images: string[]; // 10 image paths for hover cycling
+  fbLink?: string;
 }
 
 export const galleryPlaces: GalleryPlace[] = [
   {
     location: "Dalaguete, Cebu",
+    title: "HIV Awareness & Community Health Outreach",
     description:
       "Community health outreach and HIV awareness session at the barangay health center in Dalaguete.",
     date: "2025",
@@ -23,9 +26,11 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/dalaguete/500562705_1029807305920818_4236951539986238427_n.jpg",
       "/images/gallery/dalaguete/500630995_1144986104335415_8082918345904353516_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
   {
     location: "Cebu City",
+    title: "Free HIV Testing with Cebu City Health Office",
     description:
       "Free and confidential HIV testing event in partnership with the Cebu City Health Office.",
     date: "2025",
@@ -41,9 +46,11 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/cebu-city/502529217_676468921832179_1925452679690563986_n.jpg",
       "/images/gallery/cebu-city/502706969_1249357076554124_6779708409659170350_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
   {
     location: "Mandaue City",
+    title: "Health Education Workshop for Community Leaders",
     description:
       "Interactive health education workshop on prevention and stigma reduction for community leaders in Mandaue.",
     date: "2025",
@@ -59,9 +66,11 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/mandaue/505156996_1023112989891222_1945027407950347914_n.jpg",
       "/images/gallery/mandaue/505506396_679915141487557_3888984643587175722_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
   {
     location: "Lapu-Lapu City",
+    title: "Youth Peer Education Program",
     description:
       "Youth peer education program equipping students with accurate information on sexual health in Lapu-Lapu.",
     date: "2025",
@@ -77,9 +86,11 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/lapu-lapu/510718044_1036948961883515_1764961727336638352_n.jpg",
       "/images/gallery/lapu-lapu/510811772_1305513031582330_2127930971166883727_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
   {
     location: "Talisay City",
+    title: "Pastoral Support & Counselling Session",
     description:
       "Faith-based pastoral support and small-group counselling session for PLHIV and their families in Talisay.",
     date: "2025",
@@ -95,9 +106,11 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/talisay/516633746_1045742341004177_3809058453875506592_n.jpg",
       "/images/gallery/talisay/516704160_756616140069874_4195254148234009238_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
   {
     location: "Minglanilla, Cebu",
+    title: "Medical Mission & Health Screening Day",
     description:
       "Medical mission day with free health screenings and referrals to partner treatment hubs in Minglanilla.",
     date: "2025",
@@ -113,6 +126,7 @@ export const galleryPlaces: GalleryPlace[] = [
       "/images/gallery/minglanilla/536279320_122135399516845098_8952306634625905081_n.jpg",
       "/images/gallery/minglanilla/536718412_122227126766161522_2640211540502272930_n.jpg",
     ],
+    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
   },
 ];
 

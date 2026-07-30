@@ -6,14 +6,6 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-<<<<<<< Updated upstream
-import { Music, Play, Pause, SkipBack, SkipForward, Volume2 } from "@lucide/astro";
----
-
-<Layout
-  title="Our Music | PhilCHAN Cebu"
-  description="Listen to original PhilCHAN Cebu music - PhilCHAN Cebu, version 2.0, and Hope that Never Ends."
-=======
 import CommunityGallery from "../components/CommunityGallery.astro";
 import {
   Music,
@@ -29,7 +21,6 @@ import {
 <Layout
   title="Our Music & Community | PhilCHAN Cebu"
   description="Listen to original PhilCHAN Cebu music, watch our official music video, and explore photos from our community outreach across Cebu."
->>>>>>> Stashed changes
 >
   <Navbar />
 
@@ -37,16 +28,10 @@ import {
     id="main"
     class="relative transition-colors duration-300 overflow-x-hidden pb-32"
   >
-<<<<<<< Updated upstream
-    <div class="relative pt-40 pb-24 bg-health-bg overflow-hidden">
-      <div class="absolute -top-1/2 left-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-60"></div>
-      <div class="absolute -bottom-1/2 right-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[80px] opacity-70"></div>
-=======
     <CommunityGallery />
 
     <div class="relative pt-40 pb-24 glass-section overflow-hidden">
       
->>>>>>> Stashed changes
       <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
         <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green">
           <Music class="h-4 w-4" />
@@ -56,6 +41,32 @@ import {
         <p class="mt-8 text-xl text-health-text/70 max-w-2xl mx-auto font-medium leading-relaxed">Listen to original PhilCHAN Cebu music.</p>
       </div>
     </div>
+
+    <!-- Featured Video Section -->
+    <section class="section-container pt-12 pb-8">
+      <div class="reveal mb-8 text-center">
+        <div class="inline-flex items-center gap-2 mb-3 text-sm font-bold uppercase tracking-wider text-health-green">
+          <Video class="h-4 w-4" />
+          Featured Video
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-display font-bold text-health-text tracking-tight">
+          PhilCHAN Cebu
+        </h2>
+      </div>
+      <div class="max-w-4xl mx-auto glass-card p-3 sm:p-4 rounded-3xl overflow-hidden shadow-2xl reveal">
+        <div class="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
+          <video
+            id="mv-player"
+            controls
+            preload="metadata"
+            class="w-full h-full object-cover"
+          >
+            <source src="/musics/PhilCHANVID.mp4" type="video/mp4" />
+            Your browser does not support playing HTML5 videos.
+          </video>
+        </div>
+      </div>
+    </section>
 
     <section class="section-container">
       <div class="reveal mb-10 text-center">
@@ -73,14 +84,6 @@ import {
         <button data-track-index="1" class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft">
           <span class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg">2</span>
           <span class="flex-1 font-body font-semibold text-health-text text-lg truncate">PhilCHAN Cebu version 2.0</span>
-          <span class="flex-shrink-0 text-health-green">
-            <Play class="h-6 w-6 track-play-icon" />
-            <Pause class="h-6 w-6 track-pause-icon hidden" />
-          </span>
-        </button>
-        <button data-track-index="2" class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft">
-          <span class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg">3</span>
-          <span class="flex-1 font-body font-semibold text-health-text text-lg truncate">Hope that Never Ends</span>
           <span class="flex-shrink-0 text-health-green">
             <Play class="h-6 w-6 track-play-icon" />
             <Pause class="h-6 w-6 track-pause-icon hidden" />
@@ -126,7 +129,6 @@ import {
     const TRACKS_RAW = [
       { name: "PhilCHAN Cebu", src: "/musics/PhilCHAN Cebu.mp3" },
       { name: "PhilCHAN Cebu version 2.0", src: "/musics/PhilCHAN Cebu version 2.0.mp3" },
-      { name: "Hope that Never Ends", src: "/musics/PhilCHAN Cebu version 2.1 - Hope that Never Ends.mp3" },
     ];
     let audio = null;
     let currentIndex = -1;
@@ -147,6 +149,16 @@ import {
       const nextBtn = getEl("player-next");
       const progressEl = getEl("player-progress");
       const volumeEl = getEl("player-volume");
+      const mvPlayer = getEl("mv-player");
+      if (mvPlayer) {
+        mvPlayer.addEventListener("play", () => {
+          if (audio && !audio.paused) {
+            audio.pause();
+            isPlaying = false;
+            updateAllUI();
+          }
+        });
+      }
       const trackNameEl = getEl("player-track-name");
       const currentTimeEl = getEl("player-current-time");
       const durationEl = getEl("player-duration");
@@ -194,6 +206,7 @@ import {
       }
 
       function loadTrack(index) {
+        if (mvPlayer && !mvPlayer.paused) { mvPlayer.pause(); }
         if (!audio) { audio = new Audio(); audio.addEventListener("timeupdate", updateProgress); audio.addEventListener("ended", next); audio.addEventListener("loadedmetadata", updateProgress); window.__philchanAudio = audio; }
         currentIndex = index; window.__philchanCurrentIndex = currentIndex;
         audio.src = encodeURI(TRACKS_RAW[index].src);
@@ -202,7 +215,7 @@ import {
 
       function playPause() {
         if (!audio || currentIndex < 0) return;
-        if (audio.paused) { audio.play().then(() => { isPlaying = true; updateAllUI(); }).catch(() => {}); }
+        if (audio.paused) { if (mvPlayer && !mvPlayer.paused) mvPlayer.pause(); audio.play().then(() => { isPlaying = true; updateAllUI(); }).catch(() => {}); }
         else { audio.pause(); isPlaying = false; updateAllUI(); }
       }
 

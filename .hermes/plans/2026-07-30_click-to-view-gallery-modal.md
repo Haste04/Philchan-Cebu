@@ -1,6 +1,108 @@
+# Update Plan: Click-to-View Community Gallery with Event Detail Modal
+
+> **For Hermes:** Replace the hover flipbook with a click-to-open modal system. Each community card clicked opens a full detail view with selectable image gallery, event info, and Facebook link.
+
+**Goal:** Clicking a community card opens a modal overlay showing all 10 images (selectable via thumbnails), event title, date, location, description, and a link to the Facebook event post.
+
+**Architecture:** 
+- Data layer gains `title` and `fbLink` fields
+- CommunityGallery.astro rewritten: remove hover cycling JS, add click handlers + inline modal HTML
+- Modal built as inline DOM within the component (no separate component file)
+- Body scroll locked while modal open
+
+**Tech Stack:** Astro components, vanilla JS, CSS transitions, Tailwind CSS
+
+---
+
+## Current vs Target Behavior
+
+| Aspect | Current | Target |
+|---|---|---|
+| Card interaction | Hover cycles 10 images | Click opens detail modal |
+| Image viewing | Auto-cycle only, no control | User picks which image to view via thumbnails |
+| Event info shown | Location + description + date (on card) | Title + date + location + description (in modal) |
+| FB link | None | Facebook post link button |
+| Photo count display | "1/10" counter on card | Thumbnail strip shows all 10 at once |
+
+---
+
+## Task 1: Update galleryData.ts — add title and fbLink fields
+
+**Objective:** Add `title` (event name) and `fbLink` (Facebook post URL) to each gallery place entry.
+
+**File:** `src/data/galleryData.ts`
+
+### Step 1: Update the interface (lines 1-6)
+
+```diff
+ export interface GalleryPlace {
++  title: string;
+   location: string;
+   description: string;
+   date?: string;
++  fbLink?: string;
+   images: string[];
+ }
+```
+
+### Step 2: Add title and fbLink to each of the 6 places
+
+Add `title` and `fbLink` to each entry. Example for Dalaguete:
+
+```diff
+   {
++    title: "HIV Awareness & Community Health Outreach",
+     location: "Dalaguete, Cebu",
+     description: "Community health outreach and HIV awareness session at the barangay health center in Dalaguete.",
+     date: "2025",
++    fbLink: "https://www.facebook.com/PhilCHANCebu/posts/placeholder",
+     images: [...],
+   },
+```
+
+Repeat for all 6 places:
+
+| Place | Title | fbLink |
+|---|---|---|
+| Dalaguete | "HIV Awareness & Community Health Outreach" | placeholder |
+| Cebu City | "Free HIV Testing with Cebu City Health Office" | placeholder |
+| Mandaue City | "Health Education Workshop for Community Leaders" | placeholder |
+| Lapu-Lapu City | "Youth Peer Education Program" | placeholder |
+| Talisay City | "Pastoral Support & Counselling Session" | placeholder |
+| Minglanilla | "Medical Mission & Health Screening Day" | placeholder |
+
+**Note:** `fbLink` values are placeholders — replace with real Facebook post URLs when available. Set to `undefined` or omit for events without FB posts.
+
+**Verification:** TypeScript compilation passes. `galleryPlaces` array has all 6 entries with new fields.
+
+---
+
+## Task 2: Rewrite CommunityGallery.astro — click-to-modal system
+
+**Objective:** Replace the hover flipbook logic with a click-driven modal overlay containing an image gallery viewer and event details.
+
+**File:** `src/components/CommunityGallery.astro`
+
+### What stays:
+- Section header ("Community Gallery", "Our Community in Action")
+- 3-column grid layout
+- Card appearance (image preview, location badge)
+- Card hover lift effect
+
+### What changes:
+- Remove all hover cycling JavaScript
+- Remove the stacked 10-image system in each card (only show first image as preview)
+- Remove the "X/10" counter
+- Add `data-place-index` attribute to cards
+- Add click handler → opens modal
+- Add modal HTML at end of component (hidden by default)
+- In modal: main image view + thumbnail strip + event details
+
+### Complete rewritten component:
+
+```astro
 ---
 import { galleryPlaces } from "../data/galleryData";
-const placesJson = JSON.stringify(galleryPlaces);
 ---
 
 <section class="community-gallery" aria-label="Community photo gallery">
@@ -77,18 +179,6 @@ const placesJson = JSON.stringify(galleryPlaces);
       <!-- Thumbnail strip -->
       <div id="gallery-modal-thumbnails" class="gallery-modal-thumbnails"></div>
 
-      <!-- Metadata bar -->
-      <div class="gallery-modal-meta">
-        <span class="gallery-modal-meta-item">
-          <span class="gallery-modal-meta-label">Session</span>
-          <span id="gallery-modal-session" class="gallery-modal-meta-value"></span>
-        </span>
-        <span class="gallery-modal-meta-item">
-          <span class="gallery-modal-meta-label">Day</span>
-          <span id="gallery-modal-day" class="gallery-modal-meta-value"></span>
-        </span>
-      </div>
-
       <!-- Event details -->
       <div class="gallery-modal-details">
         <h3 id="gallery-modal-title" class="text-2xl font-display font-bold text-health-text"></h3>
@@ -98,8 +188,6 @@ const placesJson = JSON.stringify(galleryPlaces);
           <span id="gallery-modal-location"></span>
         </div>
         <p id="gallery-modal-description" class="mt-4 text-health-text/80 leading-relaxed"></p>
-        <!-- Decorative stylized text -->
-        <p id="gallery-modal-accent-text" class="gallery-modal-accent-text"></p>
         <a id="gallery-modal-fb-link" href="#" target="_blank" rel="noopener noreferrer" class="gallery-modal-fb-btn hidden">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
           View on Facebook
@@ -126,7 +214,7 @@ const placesJson = JSON.stringify(galleryPlaces);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem 1.5rem 1.5rem 1.5rem;
+    padding: 1rem;
   }
   .gallery-modal.hidden { display: none; }
 
@@ -145,19 +233,14 @@ const placesJson = JSON.stringify(galleryPlaces);
   .gallery-modal-content {
     position: relative;
     width: 100%;
-    max-width: min(95vw, 1400px);
+    max-width: 900px;
     max-height: 90vh;
     overflow-y: auto;
     background: #FCFBF9;
     border-radius: 2rem;
-    padding: 1.5rem;
+    padding: 2rem;
     animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    grid-template-rows: auto auto auto;
-    gap: 0 1.5rem;
-    align-items: start;
   }
   @keyframes modalSlideUp {
     from { opacity: 0; transform: translateY(40px) scale(0.96); }
@@ -188,10 +271,8 @@ const placesJson = JSON.stringify(galleryPlaces);
     position: relative;
     border-radius: 1.5rem;
     overflow: hidden;
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
     background: #1a1a1a;
-    grid-column: 1;
-    grid-row: 1;
   }
   .gallery-modal-main-img {
     width: 100%;
@@ -238,86 +319,43 @@ const placesJson = JSON.stringify(galleryPlaces);
   /* Thumbnail strip */
   .gallery-modal-thumbnails {
     display: flex;
-    gap: 0.375rem;
+    gap: 0.5rem;
     padding: 1rem 0;
     overflow-x: auto;
     scrollbar-width: thin;
-    grid-column: 1;
-    grid-row: 2;
-    align-items: center;
   }
   .gallery-modal-thumb {
     flex-shrink: 0;
-    width: 80px;
-    height: 80px;
-    border-radius: 6px;
+    width: 72px;
+    height: 54px;
+    border-radius: 0.75rem;
     overflow: hidden;
     cursor: pointer;
-    border: none;
-    outline: none;
-    transition: border-color 0.2s, opacity 0.2s, box-shadow 0.2s;
-    opacity: 0.55;
-    background: #1a1a1a;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, opacity 0.2s;
+    opacity: 0.5;
   }
-  .gallery-modal-thumb:hover {
-    opacity: 0.85;
-    box-shadow: inset 0 0 0 2px rgba(217, 91, 91, 0.35);
-  }
+  .gallery-modal-thumb:hover { opacity: 0.8; }
   .gallery-modal-thumb.active {
+    border-color: #D95B5B;
     opacity: 1;
-    box-shadow: inset 0 0 0 3px #D95B5B, 0 0 0 3px rgba(217, 91, 91, 0.2);
   }
   .gallery-modal-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    border-radius: 6px;
   }
 
   /* Event details */
   .gallery-modal-details {
-    grid-column: 2;
-    grid-row: 1 / 5;
-    border-top: none;
-    padding-top: 0;
-    padding-left: 0;
-    max-height: calc(90vh - 4rem);
-    overflow-y: auto;
-    padding-right: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
-  .gallery-modal-meta {
-    display: flex;
-    gap: 2rem;
-    padding: 0.5rem 0;
-    grid-column: 1;
-    grid-row: 3;
-  }
-  .gallery-modal-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-  }
-  .gallery-modal-meta-label {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #999;
-  }
-  .gallery-modal-meta-value {
-    font-weight: 600;
-    color: #D95B5B;
-  }
-
   .gallery-modal-fb-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     padding: 0.625rem 1.25rem;
     border-radius: 999px;
     background: #1877F2;
@@ -325,75 +363,24 @@ const placesJson = JSON.stringify(galleryPlaces);
     font-weight: 600;
     font-size: 0.875rem;
     text-decoration: none;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
-    align-self: flex-start;
+    transition: background 0.2s, transform 0.2s;
   }
-  .gallery-modal-fb-btn:hover {
-    background: #166fe5;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4);
-  }
-
-  .gallery-modal-accent-text {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 1.125rem;
-    color: #D95B5B;
-    line-height: 1.5;
-    font-weight: 500;
-    margin-top: 1.25rem;
-    display: block;
-  }
-
-  #gallery-modal-title {
-    font-size: 1.5rem;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-  }
-  #gallery-modal-date,
-  #gallery-modal-location {
-    font-size: 0.875rem;
-  }
-  #gallery-modal-description {
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    margin-top: 1rem;
-  }
+  .gallery-modal-fb-btn:hover { background: #166fe5; transform: translateY(-1px); }
 
   /* Body scroll lock */
   body.gallery-modal-open { overflow: hidden; }
 
-  @media (max-width: 768px) {
-    .gallery-modal {
-      padding: 5rem 0.75rem 0.75rem 0.75rem;
-    }
-    .gallery-modal-content {
-      padding: 1rem;
-      border-radius: 1.25rem;
-      display: block;
-      max-width: 900px;
-    }
-    .gallery-modal-viewer {
-      aspect-ratio: 4/3;
-    }
-    .gallery-modal-details {
-      border-left: none;
-      padding-top: 1rem;
-      padding-left: 0;
-      margin-top: 0.5rem;
-      max-height: none;
-      overflow-y: visible;
-    }
-    .gallery-modal-thumb { width: 56px; height: 56px; }
-    .gallery-modal-meta { gap: 1rem; }
+  @media (max-width: 640px) {
+    .gallery-modal-content { padding: 1.25rem; border-radius: 1.5rem; }
+    .gallery-modal-thumb { width: 56px; height: 42px; }
     .gallery-modal-arrow { width: 36px; height: 36px; }
   }
 </style>
 
-<script define:vars={{ placesJson }}>
+<script>
   (function () {
-    const PLACES = JSON.parse(placesJson);
+    const PLACES = /* inline JSON */;
+    // Will be populated at build time — see Task 3
 
     let currentPlaceIdx = -1;
     let currentImgIdx = 0;
@@ -410,22 +397,17 @@ const placesJson = JSON.stringify(galleryPlaces);
     const locationEl = document.getElementById('gallery-modal-location');
     const descEl = document.getElementById('gallery-modal-description');
     const fbLink = document.getElementById('gallery-modal-fb-link');
-    const sessionEl = document.getElementById('gallery-modal-session');
-    const dayEl = document.getElementById('gallery-modal-day');
 
     function openModal(placeIdx) {
       currentPlaceIdx = placeIdx;
       currentImgIdx = 0;
       const place = PLACES[placeIdx];
       
+      // Populate details
       titleEl.textContent = place.title;
       dateEl.textContent = place.date || '';
       locationEl.textContent = place.location;
       descEl.textContent = place.description;
-      sessionEl.textContent = place.date || '\u2014';
-      dayEl.textContent = place.date || '\u2014';
-      const accentEl = document.getElementById('gallery-modal-accent-text');
-      accentEl.textContent = 'Faith in action \u2014 serving communities across Cebu with compassion and dignity.';
       
       if (place.fbLink) {
         fbLink.href = place.fbLink;
@@ -434,6 +416,7 @@ const placesJson = JSON.stringify(galleryPlaces);
         fbLink.classList.add('hidden');
       }
 
+      // Build thumbnails
       thumbnails.innerHTML = '';
       place.images.forEach((src, i) => {
         const thumb = document.createElement('div');
@@ -460,6 +443,7 @@ const placesJson = JSON.stringify(galleryPlaces);
       mainImg.src = place.images[idx];
       counter.textContent = `${idx + 1} / ${place.images.length}`;
       
+      // Update thumbnail active state
       const thumbs = thumbnails.querySelectorAll('.gallery-modal-thumb');
       thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
     }
@@ -507,3 +491,81 @@ const placesJson = JSON.stringify(galleryPlaces);
     });
   })();
 </script>
+```
+
+---
+
+## Task 3: Inject gallery data as inline JSON in the component
+
+**Objective:** The modal JavaScript needs access to `galleryPlaces` data. Serialize it as inline JSON in the script.
+
+**File:** `src/components/CommunityGallery.astro` — in the `<script>` block
+
+Replace the placeholder:
+```js
+const PLACES = /* inline JSON */;
+```
+
+With Astro's JSON serialization:
+```js
+const PLACES = ${JSON.stringify(galleryPlaces)};
+```
+
+This makes all 6 places' data (title, location, date, description, fbLink, images[]) available to the modal JS at runtime.
+
+---
+
+## Task 4: Build and verify
+
+```bash
+npm run build
+```
+
+Expected: 5 pages build successfully, zero errors.
+
+### Visual checklist:
+- [ ] **Music page:** Community gallery at top, cards show first image preview + title + date
+- [ ] **Click a card:** Modal slides up with smooth animation
+- [ ] **Modal content:** Main image visible, thumbnail strip below, event details (title, date, location, desc)
+- [ ] **Click a thumbnail:** Main image switches, active thumbnail highlighted with red border
+- [ ] **Prev/Next arrows:** Cycle through images, counter updates
+- [ ] **Keyboard:** Arrow keys navigate, Escape closes modal
+- [ ] **FB link:** Button visible (blue, with icon), opens in new tab
+- [ ] **Close modal:** Click X, click backdrop, or press Escape
+- [ ] **Body scroll locked:** Can't scroll page while modal open
+- [ ] **Responsive:** Works on mobile (smaller padding, thumbnails)
+- [ ] **Home page:** No community section (already removed)
+
+---
+
+## Files Summary
+
+| File | Change |
+|---|---|
+| `src/data/galleryData.ts` | Add `title` + `fbLink` to interface and all 6 entries |
+| `src/components/CommunityGallery.astro` | Full rewrite: no more hover cycling, add modal system |
+
+**Total:** 2 files modified. ~150 lines removed (old hover logic), ~200 lines added (modal system).
+
+---
+
+## Modal Anatomy
+
+```
+┌──────────────────────────────────────────┐
+│  [×]                                     │ ← close button
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │         MAIN IMAGE                 │  │ ← selectable via thumbnails
+│  │    [◀]                    [▶]      │  │ ← prev/next arrows
+│  │                         3 / 10     │  │ ← counter
+│  └────────────────────────────────────┘  │
+│                                          │
+│  [■][■][■][■][■][■][■][■][■][■]       │ ← thumbnail strip (scrollable)
+│                                          │
+│  Event Title                             │
+│  2025 · Dalaguete, Cebu                  │
+│  Description text about the event...     │
+│  [📘 View on Facebook]                   │ ← blue FB button
+└──────────────────────────────────────────┘
+```
