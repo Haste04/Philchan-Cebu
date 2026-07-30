@@ -60,7 +60,7 @@ import {
           Featured Video
         </div>
         <h2 class="text-4xl sm:text-5xl font-display font-bold text-health-text tracking-tight">
-          PhilCHAN Cebu
+          Hope that Never Ends
         </h2>
       </div>
       <div class="max-w-4xl mx-auto glass-card p-3 sm:p-4 rounded-3xl overflow-hidden shadow-2xl reveal">
@@ -71,7 +71,7 @@ import {
             preload="metadata"
             class="w-full h-full object-cover"
           >
-            <source src="/musics/PhilCHANVID.mp4" type="video/mp4" />
+            <source src="/musics/Hope that Never Ends.mp4" type="video/mp4" />
             Your browser does not support playing HTML5 videos.
           </video>
         </div>
@@ -98,6 +98,23 @@ import {
           <span
             class="flex-1 font-body font-semibold text-health-text text-lg truncate"
             >PhilCHAN Cebu</span
+          >
+          <span class="flex-shrink-0 text-health-green">
+            <Play class="h-6 w-6 track-play-icon" />
+            <Pause class="h-6 w-6 track-pause-icon hidden" />
+          </span>
+        </button>
+        <button
+          data-track-index="1"
+          class="track-card glass-card flex items-center gap-5 p-5 text-left w-full border-l-4 border-l-transparent transition-all duration-300 hover:shadow-soft"
+        >
+          <span
+            class="flex-shrink-0 w-10 h-10 rounded-full bg-health-green-pale flex items-center justify-center text-health-green font-display font-bold text-lg"
+            >2</span
+          >
+          <span
+            class="flex-1 font-body font-semibold text-health-text text-lg truncate"
+            >PhilCHAN Cebu version 2.0</span
           >
           <span class="flex-shrink-0 text-health-green">
             <Play class="h-6 w-6 track-play-icon" />
@@ -221,18 +238,6 @@ import {
       const durationEl = getEl("player-duration");
       const playIcon = getEl("player-play-icon");
       const pauseIcon = getEl("player-pause-icon");
-      const mvPlayer = getEl("mv-player");
-
-      // Pause audio player if user plays the video
-      if (mvPlayer) {
-        mvPlayer.addEventListener("play", () => {
-          if (audio && !audio.paused) {
-            audio.pause();
-            isPlaying = false;
-            updateAllUI();
-          }
-        });
-      }
 
       function updateTrackCardStyles() {
         document.querySelectorAll(".track-card").forEach((card) => {
