@@ -7,6 +7,10 @@
  */
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
+import "../styles/dynamic-bg.css";
+import "../styles/stasis-bg.css";
+import "../styles/backgrounds.css";
+import StasisBackground from "../components/StasisBackground.astro";
 
 interface Props {
   title: string;
@@ -114,6 +118,8 @@ const ogImageURL = new URL(ogImage, Astro.site || 'http://localhost');
   <body class="flex flex-col min-h-screen bg-health-white text-health-text transition-colors duration-300">
     <a href="#main" class="skip-link">Skip to main content</a>
     
+    <StasisBackground />
+
     <div class="flex-grow">
       <slot />
     </div>

@@ -6,22 +6,47 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+<<<<<<< Updated upstream
 import { Music, Play, Pause, SkipBack, SkipForward, Volume2 } from "@lucide/astro";
 ---
 
 <Layout
   title="Our Music | PhilCHAN Cebu"
   description="Listen to original PhilCHAN Cebu music - PhilCHAN Cebu, version 2.0, and Hope that Never Ends."
+=======
+import CommunityGallery from "../components/CommunityGallery.astro";
+import {
+  Music,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  Video,
+} from "@lucide/astro";
+---
+
+<Layout
+  title="Our Music & Community | PhilCHAN Cebu"
+  description="Listen to original PhilCHAN Cebu music, watch our official music video, and explore photos from our community outreach across Cebu."
+>>>>>>> Stashed changes
 >
   <Navbar />
 
   <main
     id="main"
-    class="bg-health-white transition-colors duration-300 overflow-x-hidden pb-32"
+    class="relative transition-colors duration-300 overflow-x-hidden pb-32"
   >
+<<<<<<< Updated upstream
     <div class="relative pt-40 pb-24 bg-health-bg overflow-hidden">
       <div class="absolute -top-1/2 left-1/4 w-[800px] h-[800px] rounded-full bg-health-green-pale/50 blur-[100px] opacity-60"></div>
       <div class="absolute -bottom-1/2 right-1/4 w-[600px] h-[600px] rounded-full bg-health-red/5 blur-[80px] opacity-70"></div>
+=======
+    <CommunityGallery />
+
+    <div class="relative pt-40 pb-24 glass-section overflow-hidden">
+      
+>>>>>>> Stashed changes
       <div class="max-w-content mx-auto px-6 text-center relative z-10 reveal">
         <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green">
           <Music class="h-4 w-4" />

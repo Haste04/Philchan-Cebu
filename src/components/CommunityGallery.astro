@@ -1,0 +1,181 @@
+---
+/**
+ * CommunityGallery.astro
+ * Hover-based image cycling (flipbook effect) for community photos.
+ * Each card shows 10 images that cycle on mouse hover with crossfade.
+ */
+import { galleryPlaces } from "../data/galleryData";
+---
+
+<section class="community-gallery" aria-label="Community photo gallery">
+  <div class="max-w-content mx-auto px-6 py-16">
+    <div class="reveal mb-12 text-center">
+      <div
+        class="inline-flex items-center gap-2 mb-3 px-4 py-1.5 rounded-full bg-health-white shadow-sm text-sm font-bold tracking-wide uppercase text-health-green"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="inline-block"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21,15 16,10 5,21" />
+        </svg>
+        Community Gallery
+      </div>
+      <h2
+        class="text-4xl sm:text-5xl font-display font-bold text-health-text tracking-tight"
+      >
+        Our Community in Action
+      </h2>
+      <p
+        class="mt-4 text-xl text-health-text/70 max-w-2xl mx-auto font-medium leading-relaxed"
+      >
+        Explore photos from our outreach events across Cebu. Hover over any card
+        to see more.
+      </p>
+    </div>
+
+    <div
+      class="community-gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+      {
+        galleryPlaces.map((place, placeIndex) => (
+          <div
+            class="gallery-card reveal group"
+            style={`--n: ${placeIndex}; animation-delay: ${placeIndex * 150}ms`}
+          >
+            <div class="gallery-card-image-wrap relative overflow-hidden rounded-2xl aspect-[4/3] mb-4">
+              {
+                place.images.map((src, imgIndex) => (
+                  <img
+                    src={src}
+                    alt={`${place.location} photo ${imgIndex + 1}`}
+                    loading={imgIndex === 0 ? "eager" : "lazy"}
+                    class={`gallery-card-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                      imgIndex === 0 ? "gallery-card-img-visible" : "gallery-card-img-hidden"
+                    }`}
+                    data-img-index={imgIndex}
+                  />
+                ))
+              }
+              <span
+                class="absolute top-3 left-3 px-3 py-1 rounded-full bg-health-green text-white text-xs font-bold tracking-wide shadow-md z-10"
+              >
+                {place.location}
+              </span>
+              <span
+                class="gallery-card-counter absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/60 text-white text-xs font-bold tracking-wide z-10"
+              >
+                <span class="gallery-card-current">1</span>/10
+              </span>
+            </div>
+            <p class="text-health-text font-medium leading-relaxed">
+              {place.description}
+            </p>
+            {place.date && (
+              <p class="text-sm text-health-text/50 mt-1">{place.date}</p>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .community-gallery-grid {
+    --card-transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s ease;
+  }
+
+  .gallery-card {
+    transition: var(--card-transition);
+  }
+
+  .gallery-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 16px 48px rgba(194, 65, 65, 0.18),
+      0 4px 16px rgba(194, 65, 65, 0.08);
+  }
+
+  .gallery-card-img-hidden {
+    opacity: 0;
+  }
+
+  .gallery-card-img-visible {
+    opacity: 1;
+  }
+
+  .gallery-card-image-wrap {
+    background: #1a1a1a;
+  }
+</style>
+
+<script>
+  (function () {
+    function initGalleryCards() {
+      const cards = document.querySelectorAll(".gallery-card");
+      if (!cards.length) return;
+
+      cards.forEach((card) => {
+        const imgs = card.querySelectorAll(".gallery-card-img");
+        if (imgs.length <= 1) return;
+
+        const counterCurrent = card.querySelector(".gallery-card-current");
+        let intervalId = null;
+        let currentIndex = 0;
+
+        function showImage(index) {
+          imgs.forEach((img, i) => {
+            if (i === index) {
+              img.classList.remove("gallery-card-img-hidden");
+              img.classList.add("gallery-card-img-visible");
+            } else {
+              img.classList.add("gallery-card-img-hidden");
+              img.classList.remove("gallery-card-img-visible");
+            }
+          });
+          if (counterCurrent) {
+            counterCurrent.textContent = String(index + 1);
+          }
+        }
+
+        function startCycling() {
+          if (intervalId) return;
+          intervalId = setInterval(() => {
+            currentIndex = (currentIndex + 1) % imgs.length;
+            showImage(currentIndex);
+          }, 600);
+        }
+
+        function stopCycling() {
+          if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+          }
+          currentIndex = 0;
+          showImage(0);
+        }
+
+        card.addEventListener("mouseenter", startCycling);
+        card.addEventListener("mouseleave", stopCycling);
+        card.addEventListener("focusin", startCycling);
+        card.addEventListener("focusout", stopCycling);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", initGalleryCards);
+    document.addEventListener("astro:after-swap", initGalleryCards);
+    initGalleryCards();
+  })();
+</script>
