@@ -1,0 +1,133 @@
+/* =============================================
+   DYNAMIC BACKGROUND SYSTEM
+   Adds animated gradient orbs to <main>.
+   Uses mix-blend-mode to show through white bg.
+   Note: The persistent background layer is handled
+   by StasisBackground (fixed, z:-1) in Layout.astro.
+   ============================================= */
+
+/* --- Main: container for animated orbs --- */
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+/* --- Orb 1: Large green-gold, slow diagonal drift --- */
+main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 800px 600px at var(--orb1-x, 20%) var(--orb1-y, 30%),
+    rgba(44, 94, 72, 0.12) 0%,
+    rgba(212, 168, 83, 0.06) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: multiply;
+  animation: orb1Drift 25s ease-in-out infinite alternate;
+}
+
+@keyframes orb1Drift {
+  0%   { --orb1-x: 10%; --orb1-y: 20%; }
+  25%  { --orb1-x: 60%; --orb1-y: 40%; }
+  50%  { --orb1-x: 80%; --orb1-y: 60%; }
+  75%  { --orb1-x: 40%; --orb1-y: 30%; }
+  100% { --orb1-x: 20%; --orb1-y: 50%; }
+}
+
+/* Fallback for browsers that don't support animating custom properties */
+@supports not (animation-name: orb1Drift) {
+  main::before {
+    background: radial-gradient(
+      ellipse 800px 600px at 30% 30%,
+      rgba(44, 94, 72, 0.10) 0%,
+      rgba(212, 168, 83, 0.05) 40%,
+      transparent 70%
+    );
+  }
+}
+
+/* --- Orb 2: Medium red-gold, opposite drift --- */
+main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 600px 500px at var(--orb2-x, 70%) var(--orb2-y, 60%),
+    rgba(217, 91, 91, 0.10) 0%,
+    rgba(212, 168, 83, 0.05) 35%,
+    transparent 65%
+  );
+  mix-blend-mode: multiply;
+  animation: orb2Drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes orb2Drift {
+  0%   { --orb2-x: 80%; --orb2-y: 70%; }
+  25%  { --orb2-x: 30%; --orb2-y: 50%; }
+  50%  { --orb2-x: 50%; --orb2-y: 20%; }
+  75%  { --orb2-x: 70%; --orb2-y: 60%; }
+  100% { --orb2-x: 90%; --orb2-y: 40%; }
+}
+
+/* Fallback for orb2 */
+@supports not (animation-name: orb2Drift) {
+  main::after {
+    background: radial-gradient(
+      ellipse 600px 500px at 70% 60%,
+      rgba(217, 91, 91, 0.08) 0%,
+      rgba(212, 168, 83, 0.04) 35%,
+      transparent 65%
+    );
+  }
+}
+
+/* --- Ensure content sits above the orbs --- */
+main > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Mobile: reduce effect intensity --- */
+@media (max-width: 768px) {
+  main::before {
+    background: radial-gradient(
+      ellipse 400px 300px at 20% 30%,
+      rgba(44, 94, 72, 0.08) 0%,
+      transparent 60%
+    );
+  }
+  main::after {
+    background: radial-gradient(
+      ellipse 300px 250px at 70% 60%,
+      rgba(217, 91, 91, 0.06) 0%,
+      transparent 55%
+    );
+  }
+}
+
+/* --- Reduced motion: freeze at a static state --- */
+@media (prefers-reduced-motion: reduce) {
+  main::before,
+  main::after {
+    animation: none !important;
+  }
+  main::before {
+    background: radial-gradient(
+      ellipse 800px 600px at 25% 35%,
+      rgba(44, 94, 72, 0.08) 0%,
+      transparent 65%
+    );
+  }
+  main::after {
+    background: radial-gradient(
+      ellipse 600px 500px at 70% 60%,
+      rgba(217, 91, 91, 0.06) 0%,
+      transparent 55%
+    );
+  }
+}

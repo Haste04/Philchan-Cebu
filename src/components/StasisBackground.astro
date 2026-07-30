@@ -1,0 +1,28 @@
+---
+/**
+ * StasisBackground.astro
+ * Fixed, persistent background that sits behind all page content.
+ *
+ * Key properties:
+ *  - position: fixed → never scrolls (stasis)
+ *  - transition:name="persistent-bg" → Astro preserves this element
+ *    across page navigations so the background never flickers/reloads
+ *  - z-index: -1 → behind all content, never intercepts clicks
+ *  - pointer-events: none → transparent to mouse/touch
+ *
+ * Import this ONCE in Layout.astro, above the <slot />.
+ */
+import "../styles/stasis-bg.css";
+---
+
+<div
+  class="persistent-bg"
+  transition:name="persistent-bg"
+  transition:animate="none"
+  aria-hidden="true"
+>
+  <div class="persistent-bg-mesh"></div>
+  <div class="persistent-bg-blob persistent-bg-blob-1"></div>
+  <div class="persistent-bg-blob persistent-bg-blob-2"></div>
+  <div class="persistent-bg-blob persistent-bg-blob-3"></div>
+</div>

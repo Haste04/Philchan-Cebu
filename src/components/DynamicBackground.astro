@@ -1,0 +1,70 @@
+---
+interface Props {
+  variant?: "hero" | "section" | "music";
+}
+const { variant = "section" } = Astro.props;
+const isHero = variant === "hero";
+const isMusic = variant === "music";
+
+function particleStyle(count: number, mobileOnly = false) {
+  return Array.from({ length: count }, (_, i) => {
+    const size = 4 + Math.floor(Math.random() * 5);
+    const left = Math.floor(Math.random() * 100);
+    const top = Math.floor(Math.random() * 100);
+    const duration = 8 + Math.floor(Math.random() * 8);
+    const delay = Math.floor(Math.random() * 10);
+    const opacity = (2 + Math.floor(Math.random() * 3)) / 10;
+    const drift = -40 + Math.floor(Math.random() * 80);
+    const cls = mobileOnly ? `particle p-${i + 1} particle-mobile hidden` : `particle p-${i + 1}`;
+
+    return {
+      cls,
+      style: `--p-duration: ${duration}s; --p-delay: ${delay}s; --p-opacity: ${opacity}; --p-drift: ${drift}px; width: ${size}px; height: ${size}px; left: ${left}%; top: ${top}%;`,
+    };
+  });
+}
+
+const desktopParticles = particleStyle(15);
+const mobileParticles = particleStyle(6, true);
+---
+
+<div class="bg-dynamic" aria-hidden="true" data-variant={variant}>
+  <!-- Layer 1: Gradient mesh background -->
+  <div class="bg-mesh"></div>
+
+  <!-- Layer 2: Floating glass orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  {isHero && <div class="orb orb-4"></div>}
+
+  <!-- Layer 3: Particle field -->
+  {desktopParticles.map((p) => <div class={p.cls} style={p.style} />)}
+  {mobileParticles.map((p) => <div class={p.cls} style={p.style} />)}
+
+  <!-- Layer 4: Section accent bars -->
+  <div class="accent-bar" style="top: 10%;" data-accent></div>
+  <div class="accent-bar" style="top: 85%;" data-accent></div>
+  {isMusic && <div class="accent-bar" style="top: 50%;" data-accent></div>}
+
+  <!-- Layer 5: Hero spotlight (hero only) -->
+  {isHero && <div class="hero-spotlight"></div>}
+</div>
+
+<script>
+  function initAccentBars() {
+    const bars = document.querySelectorAll('[data-accent]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    bars.forEach(bar => observer.observe(bar));
+  }
+
+  document.addEventListener('DOMContentLoaded', initAccentBars);
+  document.addEventListener('astro:after-swap', initAccentBars);
+</script>
