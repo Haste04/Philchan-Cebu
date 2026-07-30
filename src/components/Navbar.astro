@@ -31,7 +31,9 @@ import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
           class="rounded-full h-8 w-8 object-cover"
         />
       </div>
-      <span class="hidden lg:inline tracking-tight text-[22px]">PhilCHAN Cebu</span>
+      <span class="hidden lg:inline tracking-tight text-[22px]"
+        >PhilCHAN Cebu</span
+      >
     </a>
 
     <!-- Desktop Nav Links -->
@@ -44,7 +46,7 @@ import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
               class="nav-link relative block px-5 py-2.5 font-body text-[15px] font-bold text-health-text/80 transition-all duration-200 hover:text-health-red rounded-full hover:bg-health-red/5"
             >
               {item.label}
-              <span class="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-health-red opacity-0 transition-opacity duration-300 nav-indicator"></span>
+              <span class="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-health-red opacity-0 transition-opacity duration-300 nav-indicator" />
             </a>
           </li>
         ))
@@ -54,7 +56,10 @@ import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
     <!-- Controls & Actions -->
     <div class="flex items-center gap-2 sm:gap-3">
       <!-- CTA Button (Desktop) -->
-      <a href="/#location" class="hidden md:inline-flex btn-primary text-sm px-6 py-2.5 shadow-sm hover:shadow-md transition-shadow">
+      <a
+        href="/#location"
+        class="hidden md:inline-flex btn-primary text-sm px-6 py-2.5 shadow-sm hover:shadow-md transition-shadow"
+      >
         Get Tested Free
       </a>
 
@@ -103,26 +108,32 @@ import logoImage from "../assets/images/logos/PhilChan-Cebu Logo.jpg";
     // Active Link Highlight
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link");
-    
+
     navLinks.forEach((link) => {
       const linkPath = new URL(link.href).pathname;
-      const indicator = link.querySelector('.nav-indicator');
-      
-      if (linkPath === currentPath || (linkPath === '/' && currentPath === '')) {
+      const indicator = link.querySelector(".nav-indicator");
+
+      if (
+        linkPath === currentPath ||
+        (linkPath === "/" && currentPath === "")
+      ) {
         link.classList.add("text-health-red", "bg-health-red/10");
         link.classList.remove("text-health-text/80");
-        indicator?.classList.remove('opacity-0');
+        indicator?.classList.remove("opacity-0");
       } else {
         link.classList.remove("text-health-red", "bg-health-red/10");
         link.classList.add("text-health-text/80");
-        indicator?.classList.add('opacity-0');
+        indicator?.classList.add("opacity-0");
       }
     });
 
     // Auto-close mobile dropdown
-    const mobileNavLinks = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
-    const mobileDetails = document.querySelector<HTMLDetailsElement>("#mobile-menu-details");
-    
+    const mobileNavLinks =
+      document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
+    const mobileDetails = document.querySelector<HTMLDetailsElement>(
+      "#mobile-menu-details",
+    );
+
     mobileNavLinks.forEach((link) => {
       link.addEventListener("click", () => {
         mobileDetails?.removeAttribute("open");

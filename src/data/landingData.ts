@@ -128,9 +128,9 @@ export const testingCenter: TestingCenterInfo = {
   ],
   email: "philchan2013.cebu@gmail.com", // Update with official email if different
   mapEmbedSrc:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15699.28255554747!2d123.905!3d10.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDIxJzM2LjAiTiAxMjPCsDU0JzE4LjAiRQ!5e0!3m2!1sen!2sph!4v1700000000000",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.074351234057!2d123.9174893!3d10.3730374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9a2778bcaa3ab%3A0x47b8a41d6c4b6e4e!2sMt.%20Zion%20Maternity%20Home!5e0!3m2!1sen!2sph!4v1722010000000!5m2!1sen!2sph",
   mapDirectionsUrl:
-    "https://maps.google.com/?q=Mt.+Zion+Center+Tigbao+Talamban+Cebu+City",
+    "https://www.google.com/maps/place/Mt.+Zion+Maternity+Home/@10.3730374,123.9174893,17z/data=!4m6!3m5!1s0x33a9a2778bcaa3ab:0x47b8a41d6c4b6e4e!8m2!3d10.3735598!4d123.9183691!16s%2Fg%2F11bzvwd_j3?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D",
   highlights: [
     "FREE & Confidential HIV Testing",
     "Faith-based, compassionate, and non-judgmental environment",
@@ -156,27 +156,33 @@ export const preventionTips: PreventionTip[] = [
     icon: "Stethoscope",
   },
   {
-    title: "Use Condoms Effectively",
+    title: "Abstinence",
     description:
-      "Consistent and correct use of condoms during sex provides a highly effective barrier against HIV and other sexually transmitted infections.",
+      "Refraining from sexual activity is the most effective way to eliminate the risk of acquiring or transmitting HIV and other sexually transmitted infections.",
     icon: "Shield",
   },
   {
-    title: "Consider PrEP",
+    title: "Be Faithful",
     description:
-      "Pre-Exposure Prophylaxis (PrEP) is a daily medicine that can significantly reduce your chance of getting HIV. Ask our counselors if PrEP is right for you.",
-    icon: "Pill",
+      "Maintaining a mutually faithful, long-term relationship with an uninfected partner significantly reduces your risk of exposure to HIV.",
+    icon: "Heart",
   },
   {
-    title: "Limit Your Number of Sexual Partners",
+    title: "Conscience & Correct Choice",
     description:
-      "Having fewer sexual partners decreases your chances of having a partner who is infected with HIV or whose HIV is not virally suppressed.",
-    icon: "Users",
+      "Making informed, responsible decisions based on solid values and moral awareness empowers individuals to safeguard their health and dignity.",
+    icon: "Brain",
   },
   {
-    title: "Never Share Needles",
+    title: "Don't Use Drugs",
     description:
-      "If you inject drugs, never share your needles, syringes, or other equipment. HIV can live in a used needle up to 42 days depending on temperature and other factors.",
+      "Avoiding illicit substance use protects you from high-risk behaviors and eliminates the severe danger of HIV transmission through shared needles or syringes.",
     icon: "Activity",
+  },
+  {
+    title: "Education",
+    description:
+      "Continuous learning and raising awareness about HIV transmission, care, and prevention dispel myths and foster supportive, compassionate communities.",
+    icon: "BookOpen",
   },
 ];

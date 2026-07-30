@@ -7,12 +7,12 @@ import { Heart, Users, CheckCircle } from "@lucide/astro";
 
 const facts = [
   {
-    stat: "1992",
+    stat: "2013",
     label: "Founded by the Catholic Bishops' Conference of the Philippines",
   },
   {
-    stat: "30+",
-    label: "Years supporting people living with HIV/AIDS in the Visayas",
+    stat: "10+",
+    label: "Years supporting people living with HIV/AIDS in Visayas",
   },
   {
     stat: "100%",
@@ -34,19 +34,18 @@ const facts = [
           Who is PhilCHAN Cebu?
         </h2>
         <div class="h-1.5 w-20 bg-health-red rounded-full mt-6 mb-8"></div>
-        <p
-          class="text-health-text/80 text-xl leading-relaxed font-medium"
-        >
-          The Philippine Catholic HIV/AIDS Network Inc. (PhilCHAN) is a
-          Church-based response to the HIV/AIDS epidemic, formed to provide
-          care, education, and advocacy grounded in Catholic social teaching.
-          The Cebu chapter serves the Central Visayas region with free testing,
-          counseling, and community outreach - treating every person with the
-          dignity owed to them, regardless of status or circumstance.
+        <p class="text-health-text/80 text-xl leading-relaxed font-medium">
+          PhilCHAN Cebu, also known as the Philippine Catholic HIV/AIDS Network
+          Inc., is a dedicated faith-based organization committed to combating
+          the HIV/AIDS epidemic. With a focus on providing support, education,
+          and advocacy, PhilCHAN Cebu strives to empower individuals and
+          communities affected by this health crisis, fostering a compassionate
+          environment rooted in love and understanding. Through various programs
+          and initiatives, the organization promotes awareness, prevention, and
+          access to treatment, ensuring that no one faces the challenges of
+          HIV/AIDS alone.
         </p>
-        <p
-          class="mt-6 text-health-text/80 text-xl leading-relaxed font-medium"
-        >
+        <p class="mt-6 text-health-text/80 text-xl leading-relaxed font-medium">
           We work alongside parishes, the Department of Health, and local
           government units to close gaps in access to testing and reduce the
           stigma that keeps people from seeking care.
@@ -56,7 +55,9 @@ const facts = [
       <dl class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-1">
         {
           facts.map((fact, index) => (
-            <div class={`glass-card p-8 transition-transform duration-300 hover:-translate-y-2 reveal-right delay-${(index + 1) * 100}`}>
+            <div
+              class={`glass-card p-8 transition-transform duration-300 hover:-translate-y-2 reveal-right delay-${(index + 1) * 100}`}
+            >
               <dt class="font-display text-5xl font-bold text-health-green">
                 {fact.stat}
               </dt>
